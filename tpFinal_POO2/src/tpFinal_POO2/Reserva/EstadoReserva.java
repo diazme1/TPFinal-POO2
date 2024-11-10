@@ -1,15 +1,17 @@
 package tpFinal_POO2.Reserva;
 
-public interface EstadoReserva {
+public abstract class EstadoReserva {
 	
-	public void cancelarReserva(Reserva r); // para camiarle el estado desde el propio estado y no romper el state
-
-	public boolean esPosibleCancelar();
+	public void cancelarReserva(Reserva r) {};
 	
-	public void siguienteEstado(Reserva r);
+	public void siguienteEstado(Reserva r) {};
 	
-	public boolean esPosibleRankear();
+	public void aprobarReserva(Reserva r) {};
 	
-	public boolean puedeSerAceptado();
+	public void rankearPropietario(Reserva r,Valoracion val) {};
+	
+	public void rankearInquilino(Reserva r,Valoracion val) {};
+	
+	public void rankearInmueble(Reserva r,Valoracion val) {};
 	
 }

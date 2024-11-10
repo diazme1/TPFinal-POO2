@@ -1,18 +1,8 @@
 package tpFinal_POO2.Reserva;
 
-public class EstadoSolicitada implements EstadoReserva{
+public class EstadoSolicitada extends EstadoReserva{
 	
 	public EstadoSolicitada() {}
-
-	@Override
-	public void cancelarReserva(Reserva r) {
-		r.cambiaEstadoA(new EstadoCancelada());
-	}
-
-	@Override
-	public boolean esPosibleCancelar() {
-		return true;
-	}
 
 	@Override
 	public void siguienteEstado(Reserva r) {
@@ -20,14 +10,9 @@ public class EstadoSolicitada implements EstadoReserva{
 	}
 
 	@Override
-	public boolean esPosibleRankear() {
-		return false;
+	public void aprobarReserva(Reserva r) {
+		this.siguienteEstado(r);
+		// ENVIAR MAIL A INQUILINO
 	}
-
-	@Override
-	public boolean puedeSerAceptado() {
-		return true;
-	}
-	
 	
 }
