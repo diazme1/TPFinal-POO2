@@ -17,16 +17,16 @@ public class Reserva {
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
 		this.inquilino=inquilino;
-		this.estado= EstadoSolicitada();	// POR SINGLETON SIN EL NEW
+		this.estado= new EstadoSolicitada();	// POR SINGLETON SIN EL NEW
 		
 	}
 	
 	public void aprobarReserva() {
 		// SIGNIFICA QUE LA RESERVA ESTA EN ESTADO SOLICITADA Y LA APRUEBA EL PROPIETARIO 
 		if(this.estado.puedeSerAceptado()) {
-			this.estado.siguienteEstado();
+			this.estado.siguienteEstado(this);
+			this.inquilino.recibeEmailDeConfirmacion(); // ESTA BIEN ASI O TENGO QUE MANDARLO A TRAVES DEL EMAIL? / MAIL SENDER
 		}
-		this.inquilino.recibeEmailDeConfirmacion(); // ESTA BIEN ASI O TENGO QUE MANDARLO A TRAVES DEL EMAIL?
 	}
 	
 	public Inquilino getInfoPosibleInquilino() {
@@ -42,7 +42,22 @@ public class Reserva {
 			fechaActual.plusDays(1);
 		}
 		return valFinal;
-	}	// podria intentarlo con streams?
+	}
+	
+	public boolean puedeCancelarse() {
+		return this.estado.esPosibleCancelar();
+	} // va a servir para que la politica de cancelacion pueda chequear si se efectua la cancelacion
+	
+	/**
+	 * 	public void cancelarReserva() {
+			if(this.estado.esPosibleCancelar()) {
+				this.estado= new EstadoCancelada(); // si cambio el estado desde aca rompo el state
+			}
+		}
+	 */
+	public void cancelarReserva() {
+		this.estado.cancelarReserva(this);
+	}
 	
 	public void rankearInmueble(Valoracion val) {
 		if(this.estado.esPosibleRankear()) {
@@ -60,5 +75,9 @@ public class Reserva {
 		if(this.estado.esPosibleRankear()) {
 			this.inmueble.getDueño().agregarValoracion(val);
 		}
+	}
+
+	public void cambiaEstadoA(EstadoReserva nuevoEstado) {
+		this.estado=nuevoEstado;
 	}
 }
