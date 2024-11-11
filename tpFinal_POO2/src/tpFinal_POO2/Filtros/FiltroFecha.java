@@ -2,7 +2,7 @@ package tpFinal_POO2.Filtros;
 
 import java.time.LocalDate;
 
-import tpFinal_POO2.Inmueble;
+import tpFinal_POO2.Inmueble.Inmueble;
 
 public class FiltroFecha implements Filtro {
 

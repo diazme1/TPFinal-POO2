@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import tpFinal_POO2.Inmueble;
+import tpFinal_POO2.Inmueble.Inmueble;
 
 public class FiltroCompuesto {
 	

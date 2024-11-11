@@ -1,4 +1,4 @@
-package tpFinal_POO2;
+package tpFinal_POO2.Inmueble;
 
 import java.time.LocalDate;
 

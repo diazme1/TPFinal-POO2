@@ -1,6 +1,6 @@
 package tpFinal_POO2.Filtros;
 
-import tpFinal_POO2.Inmueble;
+import tpFinal_POO2.Inmueble.Inmueble;
 
 public class FiltroCantHuespedes implements Filtro {
 

@@ -8,9 +8,9 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import tpFinal_POO2.Inmueble;
 import tpFinal_POO2.Filtros.FiltroCompuesto;
 import tpFinal_POO2.Filtros.FiltroPrecio;
+import tpFinal_POO2.Inmueble.Inmueble;
 
 class FiltroPrecioTest {
 
