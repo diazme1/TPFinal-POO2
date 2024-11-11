@@ -39,8 +39,8 @@ public class Reserva {
 		return this.inquilino;
 	}
 	
-	public double getMontoTotal() {
-		double valFinal = 0;
+	public float getMontoTotal() {
+		float valFinal = 0;
 		LocalDate fechaActual = this.checkIn;
 		while(!fechaActual.isAfter(this.checkOut)) {
 			valFinal+=this.inmueble.getValorDeFecha(fechaActual);

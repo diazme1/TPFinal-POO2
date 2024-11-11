@@ -10,7 +10,7 @@ public class Inmueble {
 		return null;
 	}
 
-	public double getValorDeFecha(LocalDate fechaActual) {
+	public int getValorDeFecha(LocalDate fechaActual) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

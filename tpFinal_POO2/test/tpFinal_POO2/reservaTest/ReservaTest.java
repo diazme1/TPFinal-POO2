@@ -29,7 +29,7 @@ class ReservaTest {
 		this.formaPago= FormaDePago.EFECTIVO;
 		this.inq1= mock(Usuario.class);
 		this.inmueble1= mock(Inmueble.class);
-		when(inmueble1.getValorDeFecha(any(LocalDate.class))).thenReturn(100.1);
+		when(inmueble1.getValorDeFecha(any(LocalDate.class))).thenReturn(100);
 		this.reserva= new Reserva(inmueble1,formaPago,checkIn,checkOut,inq1);
 	}
 	@Test
