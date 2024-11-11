@@ -7,6 +7,8 @@ public class EstadoAceptada extends EstadoReserva {
 	@Override
 	public void cancelarReserva(Reserva r) {
 		r.cambiaEstadoA(new EstadoCancelada());
+		r.enviarMailCancelacion();
+		r.getInmueble().reservaCancelada(r);
 	} 
 
 	@Override

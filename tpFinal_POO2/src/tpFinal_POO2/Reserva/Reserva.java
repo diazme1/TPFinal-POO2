@@ -1,7 +1,6 @@
 package tpFinal_POO2.Reserva;
 
 import java.time.LocalDate;
-import java.util.function.BooleanSupplier;
 
 import tpFinal_POO2.Inmueble.Inmueble;
 import tpFinal_POO2.Usuario.Usuario;
@@ -15,16 +14,21 @@ public class Reserva {
 	private LocalDate checkOut;
 	private Usuario inquilino;
 	private EstadoReserva estado;
-	private MailSender imail;
+	private MailSender mailSender;
 	
-	public Reserva(Inmueble inmueble, FormaDePago formaDePago, LocalDate checkIn, LocalDate checkOut, Usuario inquilino) {
+	public Reserva(Inmueble inmueble, FormaDePago formaDePago, LocalDate checkIn, LocalDate checkOut, Usuario inquilino, MailSender mailSender) {
 		this.inmueble = inmueble;
 		this.formaDePago = formaDePago;
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
 		this.inquilino=inquilino;
+		this.mailSender = mailSender;
 		this.estado= new EstadoSolicitada();
 		
+	}
+	
+	public String getCiudad() {
+		return this.inmueble.getCiudad();
 	}
 	
 	public void aprobarReserva() {
@@ -41,14 +45,8 @@ public class Reserva {
 		return this.inquilino;
 	}
 	
-	public float getMontoTotal() {
-		float valFinal = 0;
-		LocalDate fechaActual = this.checkIn;
-		while(!fechaActual.isAfter(this.checkOut)) {
-			valFinal+=this.inmueble.getValorDeFecha(fechaActual);
-			fechaActual =fechaActual.plusDays(1);
-		}
-		return valFinal;
+	public int getMontoTotal() {
+		return this.inmueble.getMontoTotal(checkIn,checkOut);
 	}
 	
 	public void cancelarReserva() {
@@ -75,6 +73,7 @@ public class Reserva {
 		this.estado.rankearInquilino(this,val);
 	}
 	
+
 	public void rankearPropietario(Valoracion val) {
 		this.estado.rankearPropietario(this,val);
 	}
@@ -86,8 +85,20 @@ public class Reserva {
 	public boolean estaAprobada(){
 		return this.estado.esAprobada(this);
 	}
+	
+	public boolean estaCancelada(){
+		return this.estado.esCancelada(this);
+	}
 
 	public boolean sePuedeValorar() {
 		return this.estado.puedeValorar(this);
+	}
+
+	public void enviarMailConfirmacion() {
+		mailSender.sendEmail(inquilino.getEmail(), "Reserva Aprobada!", "Se confirmo su reserva, gracias.");
+	}
+
+	public void enviarMailCancelacion() {
+		mailSender.sendEmail(this.getPropietario().getEmail(), "Reserva Cancelada!", "Se cancelo la reserva ;(");
 	}
 }

@@ -12,7 +12,7 @@ public class EstadoSolicitada extends EstadoReserva{
 	@Override
 	public void aprobarReserva(Reserva r) {
 		this.siguienteEstado(r);
-		// ENVIAR MAIL A INQUILINO
+		r.enviarMailConfirmacion();
 	}
 	
 }

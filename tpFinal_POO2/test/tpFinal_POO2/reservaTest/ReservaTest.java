@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import tpFinal_POO2.Inmueble.Inmueble;
 import tpFinal_POO2.Reserva.FormaDePago;
+import tpFinal_POO2.Reserva.MailSender;
 import tpFinal_POO2.Reserva.Reserva;
 import tpFinal_POO2.Usuario.Usuario;
 import tpFinal_POO2.Valoracion.Valoracion;
@@ -23,6 +24,7 @@ class ReservaTest {
 	private LocalDate checkIn, checkOut;
 	private FormaDePago formaPago;
 	private Valoracion valoracionMock;
+	private MailSender imailMock;
 	
 	@BeforeEach
 	void setUp() throws Exception {
@@ -33,29 +35,34 @@ class ReservaTest {
 		this.propMock= mock(Usuario.class);
 		this.inmueble1= mock(Inmueble.class);
 		this.valoracionMock = mock(Valoracion.class);
+		this.imailMock = mock(MailSender.class);
 		
-		when(inmueble1.getValorDeFecha(any(LocalDate.class))).thenReturn(100);
+		when(inmueble1.getMontoTotal(checkIn,checkOut)).thenReturn(400);
 		when(inmueble1.getDueño()).thenReturn(propMock);
-
+		when(inqMock.getEmail()).thenReturn("email");
+		when(propMock.getEmail()).thenReturn("email");
 		
-		this.reserva= new Reserva(inmueble1,formaPago,checkIn,checkOut,inqMock);
+		this.reserva= new Reserva(inmueble1,formaPago,checkIn,checkOut,inqMock,imailMock);
 	}
 	@Test
 	void seApruebaUnaReserva() {
 		reserva.aprobarReserva();
 		assertTrue(this.reserva.estaAprobada());
+		verify(imailMock,times(1)).sendEmail("email","Reserva Aprobada!", "Se confirmo su reserva, gracias.");
 	}
 	
 	@Test
 	void seCancelaUnaReserva() {
+		reserva.aprobarReserva();
 		this.reserva.cancelarReserva();
-		assertFalse(this.reserva.sePuedeValorar());
+		assertTrue(this.reserva.estaCancelada());
+		verify(imailMock,times(1)).sendEmail("email", "Reserva Cancelada!", "Se cancelo la reserva ;(");
 	}
 	
 	@Test
 	void seChequeaLosCostos() {
 		assertEquals(400, reserva.getMontoTotal());
-		verify(inmueble1,times(4)).getValorDeFecha(any(LocalDate.class));
+		verify(inmueble1,times(1)).getMontoTotal(checkIn,checkOut);
 	}
 	
 	@Test
