@@ -1,5 +1,7 @@
 package tpFinal_POO2.Reserva;
 
+import tpFinal_POO2.Valoracion.Valoracion;
+
 public class EstadoFinalizada extends EstadoReserva {
 
 	public EstadoFinalizada(){};
@@ -18,4 +20,7 @@ public class EstadoFinalizada extends EstadoReserva {
 	public void rankearInmueble(Reserva r,Valoracion val) {
 		r.getInmueble().agregarValoracion(val);
 	};
+	
+	@Override
+	public boolean puedeValorar(Reserva reserva) {return true;};
 }

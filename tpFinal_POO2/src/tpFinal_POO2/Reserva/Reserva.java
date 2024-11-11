@@ -1,6 +1,7 @@
 package tpFinal_POO2.Reserva;
 
 import java.time.LocalDate;
+import java.util.function.BooleanSupplier;
 
 import tpFinal_POO2.Inmueble.Inmueble;
 import tpFinal_POO2.Usuario.Usuario;
@@ -9,11 +10,12 @@ import tpFinal_POO2.Valoracion.Valoracion;
 public class Reserva {
 	
 	private Inmueble inmueble;
-	private FormaDePago formaDePago;
+	FormaDePago formaDePago;
 	private LocalDate checkIn;
 	private LocalDate checkOut;
 	private Usuario inquilino;
 	private EstadoReserva estado;
+	private MailSender imail;
 	
 	public Reserva(Inmueble inmueble, FormaDePago formaDePago, LocalDate checkIn, LocalDate checkOut, Usuario inquilino) {
 		this.inmueble = inmueble;
@@ -29,8 +31,8 @@ public class Reserva {
 			this.estado.aprobarReserva(this);
 	}
 	
-	public void realizarCheckOut() {
-		if(LocalDate.now().equals(this.checkOut)) {
+	public void realizarCheckOut(LocalDate diaHecho) {
+		if(diaHecho.equals(this.checkOut)) {
 			this.estado.siguienteEstado(this);
 		}
 	}
@@ -44,7 +46,7 @@ public class Reserva {
 		LocalDate fechaActual = this.checkIn;
 		while(!fechaActual.isAfter(this.checkOut)) {
 			valFinal+=this.inmueble.getValorDeFecha(fechaActual);
-			fechaActual.plusDays(1);
+			fechaActual =fechaActual.plusDays(1);
 		}
 		return valFinal;
 	}
@@ -84,8 +86,8 @@ public class Reserva {
 	public boolean estaAprobada(){
 		return this.estado.esAprobada(this);
 	}
-	
-	public boolean puedenRankear(){
-		return this.estado.puedenRankear(this);
+
+	public boolean sePuedeValorar() {
+		return this.estado.puedeValorar(this);
 	}
 }

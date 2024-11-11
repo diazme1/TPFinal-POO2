@@ -16,6 +16,8 @@ public abstract class EstadoReserva {
 	
 	public void rankearInmueble(Reserva r,Valoracion val) {}
 
-	public boolean esAprobada(Reserva reserva){return false;};
+	public boolean esAprobada(Reserva reserva){return false;}
+
+	public boolean puedeValorar(Reserva reserva) {return false;};
 	
 }
