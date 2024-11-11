@@ -2,6 +2,10 @@ package tpFinal_POO2.Reserva;
 
 import java.time.LocalDate;
 
+import tpFinal_POO2.Inmueble.Inmueble;
+import tpFinal_POO2.Usuario.Usuario;
+import tpFinal_POO2.Valoracion.Valoracion;
+
 public class Reserva {
 	
 	private Inmueble inmueble;
@@ -31,7 +35,7 @@ public class Reserva {
 		}
 	}
 	
-	public Inquilino getInfoPosibleInquilino() {
+	public Usuario getInfoPosibleInquilino() {
 		return this.inquilino;
 	}
 	
@@ -49,11 +53,11 @@ public class Reserva {
 		this.estado.cancelarReserva(this);
 	}
 	
-	public Propietario getPropietario() {
+	public Usuario getPropietario() {
 		return this.inmueble.getDueño();
 	}
 	
-	public Inquilino getInquilino() {
+	public Usuario getInquilino() {
 		return this.inquilino;
 	}
 	
@@ -62,18 +66,26 @@ public class Reserva {
 	}
 	
 	public void rankearInmueble(Valoracion val) {
-		this.estado.rankearInmueble(val,this);
+		this.estado.rankearInmueble(this,val);
 	}
 	
 	public void rankearInquilino(Valoracion val) {
-		this.estado.rankearInquilino(val,this);
+		this.estado.rankearInquilino(this,val);
 	}
 	
 	public void rankearPropietario(Valoracion val) {
-		this.estado.rankearPropietario(val,this);
+		this.estado.rankearPropietario(this,val);
 	}
 	
 	public void cambiaEstadoA(EstadoReserva nuevoEstado) {
 		this.estado=nuevoEstado;
+	}
+	
+	public boolean estaAprobada(){
+		return this.estado.esAprobada(this);
+	}
+	
+	public boolean puedenRankear(){
+		return this.estado.puedenRankear(this);
 	}
 }

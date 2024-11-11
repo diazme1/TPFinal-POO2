@@ -13,6 +13,8 @@ public class EstadoAceptada extends EstadoReserva {
 	public void siguienteEstado(Reserva r) {
 		r.cambiaEstadoA(new EstadoFinalizada());
 	}
-		
+	
+	@Override
+	public boolean esAprobada(Reserva reserva){return true;};
 
 }

@@ -1,5 +1,7 @@
 package tpFinal_POO2.Reserva;
 
+import tpFinal_POO2.Valoracion.Valoracion;
+
 public abstract class EstadoReserva {
 	
 	public void cancelarReserva(Reserva r) {};
@@ -12,6 +14,8 @@ public abstract class EstadoReserva {
 	
 	public void rankearInquilino(Reserva r,Valoracion val) {};
 	
-	public void rankearInmueble(Reserva r,Valoracion val) {};
+	public void rankearInmueble(Reserva r,Valoracion val) {}
+
+	public boolean esAprobada(Reserva reserva){return false;};
 	
 }

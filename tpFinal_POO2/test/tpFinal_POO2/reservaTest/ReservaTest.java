@@ -5,25 +5,43 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import tpFinal_POO2.Inmueble.Inmueble;
 import tpFinal_POO2.Reserva.FormaDePago;
 import tpFinal_POO2.Reserva.Reserva;
+import tpFinal_POO2.Usuario.Usuario;
 
 import static org.mockito.Mockito.*;
 
+import java.time.LocalDate;
+
 class ReservaTest {
-	
 	private Reserva reserva;
 	private Inmueble inmueble1;
-	private Inquilino inq1;
-	private Propietario prop1;
+	private Usuario inq1;
+	private Usuario prop1;
+	private LocalDate checkIn, checkOut;
+	private FormaDePago formaPago;
 	
 	@BeforeEach
 	void setUp() throws Exception {
-		this.reserva= new Reserva(inmueble1,FormaDePago.TARJETACREDITO,2-12-23,12-12-23,inq1);
+		this.checkIn= LocalDate.of(2022, 1, 10);
+		this.checkOut= LocalDate.of(2022, 1, 13);
+		this.formaPago= FormaDePago.EFECTIVO;
+		this.inq1= mock(Usuario.class);
+		this.inmueble1= mock(Inmueble.class);
+		when(inmueble1.getValorDeFecha(any(LocalDate.class))).thenReturn(100.1);
+		this.reserva= new Reserva(inmueble1,formaPago,checkIn,checkOut,inq1);
 	}
 	@Test
-	void testAprobacionReserva() {
-		assertEquals(null, null);;
+	void seApruebaUnaReserva() {
+		reserva.aprobarReserva();
+		assertTrue(this.reserva.estaAprobada());
 	}
-
+	
+	@Test
+	void seChequeaLosCostos() {
+		assertEquals(400, reserva.getMontoTotal());
+	}
+	
 }
+	
