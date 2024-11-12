@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public class Observer {
-	//private static Observer instance;
+	private static Observer instance;
 	//la instancia
 	private HashMap<Inmueble, HashSet<ListenerReserva>> mapReserva = new HashMap<Inmueble, HashSet<ListenerReserva>>(); 
 	//Map de subscriptores a Reservas
@@ -13,16 +13,15 @@ public class Observer {
 	private HashMap<Inmueble, HashSet<ListenerCancelacion>> mapCancelacion= new HashMap<Inmueble, HashSet<ListenerCancelacion>>(); 
 	//Map de subscriptores a Cancelacion
 	
-	/*private Observer(){}
-	//el constructor deberia ser privado para Singleton, pues no quize añadir metodos para limpiar por completo los maps unicamente para el test
+	private Observer(){}
+	//el constructor deberia ser privado para Singleton
 	public static Observer getInstance() {
 	//si no hay una instancia de Singleton, la crea, y si ya hay la da
 		if (instance== null) {
 			instance = new Observer();
 		}
 		return instance;
-	}*/
-	
+	}
 	public void attachBajaPrecio(Inmueble observable, ListenerBajaPrecio listener) {
 		//Añade un subscritor al map de BajaPrecio, si no esta como clave lo añade
 		if(mapBajaPrecio.containsKey(observable)){

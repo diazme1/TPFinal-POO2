@@ -1,12 +1,20 @@
 package tpFinal_POO2.observer;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.Test;
 
 class ObserverTest {
-	private Observer observer = new Observer();
+	private Observer observer = Observer.getInstance();
 	private Inmueble obs = mock(Inmueble.class);
+	
+	
+	@Test
+	void SingletonTest() {
+		Observer singleton = Observer.getInstance();
+		assertEquals(observer,singleton);
+	}
 	
 	@Test
 	void ReservasTest() {
