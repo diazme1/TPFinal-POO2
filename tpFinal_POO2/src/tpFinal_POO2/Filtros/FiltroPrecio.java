@@ -14,7 +14,7 @@ public class FiltroPrecio implements Filtro {
 	
 	public boolean cumplePara(Inmueble inmueble, FiltroCompuesto filtro){
 		
-		double montoTotalInmueble = inmueble.getMontoTotal(filtro.getFechaInicio(), filtro.getFechaFin());
+		double montoTotalInmueble = inmueble.getMontoTotalPara(filtro.getFechaInicio(), filtro.getFechaFin());
 		
 		return (this.precioMinimo <= montoTotalInmueble && montoTotalInmueble <= this.precioMaximo);
 	};
