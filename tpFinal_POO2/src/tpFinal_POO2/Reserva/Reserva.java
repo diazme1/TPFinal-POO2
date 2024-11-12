@@ -24,7 +24,6 @@ public class Reserva {
 		this.inquilino=inquilino;
 		this.mailSender = mailSender;
 		this.estado= new EstadoSolicitada();
-		
 	}
 	
 	public String getCiudad() {

@@ -1,6 +1,5 @@
 package tpFinal_POO2.SitioWeb;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -8,7 +7,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import tpFinal_POO2.Inmueble.Inmueble;
-import tpFinal_POO2.Reserva.Reserva;
 import tpFinal_POO2.Usuario.Usuario;
 
 public class SitioWeb {
@@ -81,7 +79,19 @@ public class SitioWeb {
 	}
 
 	public int cantidadDeInmueblesOcupados() {
-		return 0;   // TERMINAR
+		return usuarios.stream().mapToInt(usuario->usuario.inmueblesAlquilados().size()).sum();  
+	}
+
+	public Set<Usuario> getUsuarios() {
+		return this.usuarios;
+	}
+
+	public Set<Servicio> getServicios() {
+		return this.servicios;
+	}
+
+	public Set<TipoDeInmueble> getTipoDeInmuebles() {
+		return this.tipoDeInmuebles;
 	}
 	
 	
