@@ -23,4 +23,7 @@ public class EstadoFinalizada extends EstadoReserva {
 	
 	@Override
 	public boolean puedeValorar(Reserva reserva) {return true;};
+	
+	@Override
+	public boolean esFinalizada() {return true; }
 }

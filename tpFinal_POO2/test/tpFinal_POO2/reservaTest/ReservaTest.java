@@ -43,7 +43,8 @@ class ReservaTest {
 		when(propMock.getEmail()).thenReturn("email");
 		when(inmueble1.getCiudad()).thenReturn("BuenosAires");
 		
-		this.reserva= new Reserva(inmueble1,formaPago,checkIn,checkOut,inqMock,imailMock);
+		this.reserva= new Reserva(inmueble1,formaPago,checkIn,checkOut,inqMock);
+		this.reserva.setMailSender(imailMock);
 	}
 
 	@Test
@@ -51,6 +52,9 @@ class ReservaTest {
 		reserva.aprobarReserva();
 		assertTrue(this.reserva.estaAprobada());
 		verify(imailMock,times(1)).sendEmail("email","Reserva Aprobada!", "Se confirmo su reserva, gracias.");
+		assertFalse(reserva.estaCancelada());
+		assertFalse(reserva.estaFinalizada());
+		assertFalse(reserva.sePuedeValorar());
 	}
 	
 	@Test
@@ -59,6 +63,7 @@ class ReservaTest {
 		this.reserva.cancelarReserva();
 		assertTrue(this.reserva.estaCancelada());
 		verify(imailMock,times(1)).sendEmail("email", "Reserva Cancelada!", "Se cancelo la reserva ;(");
+		assertFalse(reserva.estaAprobada());
 	}
 	
 	@Test
@@ -71,7 +76,14 @@ class ReservaTest {
 	void seChequeaInformacionDeLaReserva() {
 		assertEquals(inqMock, reserva.getInfoPosibleInquilino());
 		assertEquals("BuenosAires", reserva.getCiudad());
+		assertEquals(LocalDate.of(2022, 1, 13), reserva.getCheckOut());
+		assertEquals(LocalDate.of(2022, 1, 10), reserva.getCheckIn());
+		assertFalse(reserva.estaFinalizada());
 		verify(inmueble1,times(1)).getCiudad();
+		assertFalse(reserva.haySolapamiento(LocalDate.of(2023, 1, 10), LocalDate.of(2023, 1, 13)));
+		assertTrue(reserva.haySolapamiento(LocalDate.of(2022, 1, 12), LocalDate.of(2022, 1, 11)));
+		assertFalse(reserva.haySolapamiento(LocalDate.of(2023, 1, 10), LocalDate.of(2023, 1, 13)));
+		assertFalse(reserva.haySolapamiento(LocalDate.of(2020, 1, 10), LocalDate.of(2020, 1, 13)));
 	}
 	
 	@Test
@@ -80,6 +92,15 @@ class ReservaTest {
 		this.reserva.realizarCheckOut(LocalDate.of(2022, 1, 13));
 		// si se puede rankear es porque esta finalizada
 		assertTrue(this.reserva.sePuedeValorar());
+		assertTrue(reserva.estaFinalizada());
+	}
+	
+	@Test
+	void seChequeaLaNORealizacionDelCheckOut() {
+		reserva.aprobarReserva();
+		this.reserva.realizarCheckOut(LocalDate.of(2022, 1, 15));
+		// si se puede rankear es porque esta finalizada
+		assertFalse(reserva.estaFinalizada());
 	}
 	
 	@Test

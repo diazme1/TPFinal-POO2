@@ -20,6 +20,8 @@ public abstract class EstadoReserva {
 
 	public boolean puedeValorar(Reserva reserva) {return false;}
 
-	public boolean esCancelada(Reserva reserva) {return false;};
+	public boolean esCancelada(Reserva reserva) {return false;}
+
+	public boolean esFinalizada() {return false;}
 	
 }

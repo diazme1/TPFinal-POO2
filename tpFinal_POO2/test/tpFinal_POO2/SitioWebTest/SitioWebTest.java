@@ -6,7 +6,10 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,6 +30,9 @@ class SitioWebTest {
 	private Inmueble inmuebleMock;
 	private Servicio servicioMock;
 	private TipoDeInmueble tipoInmuebleMock;
+	private ArrayList<Inmueble> inmueblesMock;
+	private Set<TipoDeInmueble> tiposInmuebleMock;
+	private Set<Servicio> serviciosMock;
 	
 	
 	@BeforeEach
@@ -39,13 +45,17 @@ class SitioWebTest {
 		this.tipoInmuebleMock=mock(TipoDeInmueble.class);
 		this.inquilinoMock=mock(Usuario.class);
 		this.propietarioMock=mock(Usuario.class);
+		this.inmueblesMock = new ArrayList<Inmueble>();
+		this.tiposInmuebleMock=new HashSet<TipoDeInmueble>();
+		this.serviciosMock=new HashSet<Servicio>();
+		this.inmueblesMock.add(inmuebleMock);
 		
 		this.site.addUsuario(inquilinoMock);
 		this.site.addUsuario(propietarioMock);
 		this.site.darAltaServicios(servicioMock);
 		this.site.darAltaTipoInmueble(tipoInmuebleMock);
 		
-		when(propietarioMock.getInmuebles()).thenReturn(List.asList(inmuebleMock));
+		when(propietarioMock.getInmuebles()).thenReturn(inmueblesMock);
 	}
 	
 	
@@ -59,7 +69,12 @@ class SitioWebTest {
 	@Test
 	void seChequeaLaFiltracionDeInmuebles() {
 		site.filtrarPropiedadesPor(filtroMock);
-		verify(filtroMock,times(1)).filtrar(inmuebleMock);
+		verify(filtroMock,times(1)).filtrar(inmueblesMock);
+	}
+	
+	@Test
+	void seChequeaLaValidezDeUnInmueble() {
+		
 	}
 	
 	

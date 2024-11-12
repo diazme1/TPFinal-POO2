@@ -16,14 +16,29 @@ public class Reserva {
 	private EstadoReserva estado;
 	private MailSender mailSender;
 	
-	public Reserva(Inmueble inmueble, FormaDePago formaDePago, LocalDate checkIn, LocalDate checkOut, Usuario inquilino, MailSender mailSender) {
+	public Reserva(Inmueble inmueble, FormaDePago formaDePago, LocalDate checkIn, LocalDate checkOut, Usuario inquilino) {
 		this.inmueble = inmueble;
 		this.formaDePago = formaDePago;
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
 		this.inquilino=inquilino;
-		this.mailSender = mailSender;
 		this.estado= new EstadoSolicitada();
+	}
+	
+	public boolean haySolapamiento(LocalDate checkIn, LocalDate checkOut) {
+        return checkIn.isBefore(this.getCheckOut()) && checkOut.isAfter(this.getCheckIn());
+    }
+	
+	public LocalDate getCheckIn() {
+		return this.checkIn;
+	}
+
+	public LocalDate getCheckOut() {
+		return this.checkOut;
+	}
+
+	public boolean estaFinalizada() {
+		return this.estado.esFinalizada();
 	}
 	
 	public String getCiudad() {
@@ -95,6 +110,10 @@ public class Reserva {
 
 	public void enviarMailConfirmacion() {
 		mailSender.sendEmail(inquilino.getEmail(), "Reserva Aprobada!", "Se confirmo su reserva, gracias.");
+	}
+
+	public MailSender setMailSender(MailSender mailSender) {
+		return this.mailSender=mailSender;
 	}
 
 	public void enviarMailCancelacion() {
