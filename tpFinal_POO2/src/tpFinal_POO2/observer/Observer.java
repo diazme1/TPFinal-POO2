@@ -1,17 +1,29 @@
-package observer;
+package tpFinal_POO2.observer;
 
 import java.util.HashMap;
 import java.util.HashSet;
 
 public class Observer {
-	private HashMap<Observable, HashSet<ListenerReserva>> mapReserva = new HashMap<Observable, HashSet<ListenerReserva>>(); 
+	//private static Observer instance;
+	//la instancia
+	private HashMap<Inmueble, HashSet<ListenerReserva>> mapReserva = new HashMap<Inmueble, HashSet<ListenerReserva>>(); 
 	//Map de subscriptores a Reservas
-	private HashMap<Observable, HashSet<ListenerBajaPrecio>> mapBajaPrecio= new HashMap<Observable, HashSet<ListenerBajaPrecio>>(); 
+	private HashMap<Inmueble, HashSet<ListenerBajaPrecio>> mapBajaPrecio= new HashMap<Inmueble, HashSet<ListenerBajaPrecio>>(); 
 	//Map de subscriptores a BajaPrecio
-	private HashMap<Observable, HashSet<ListenerCancelacion>> mapCancelacion= new HashMap<Observable, HashSet<ListenerCancelacion>>(); 
+	private HashMap<Inmueble, HashSet<ListenerCancelacion>> mapCancelacion= new HashMap<Inmueble, HashSet<ListenerCancelacion>>(); 
 	//Map de subscriptores a Cancelacion
 	
-	public void attachBajaPrecio(Observable observable, ListenerBajaPrecio listener) {
+	/*private Observer(){}
+	//el constructor deberia ser privado para Singleton, pues no quize añadir metodos para limpiar por completo los maps unicamente para el test
+	public static Observer getInstance() {
+	//si no hay una instancia de Singleton, la crea, y si ya hay la da
+		if (instance== null) {
+			instance = new Observer();
+		}
+		return instance;
+	}*/
+	
+	public void attachBajaPrecio(Inmueble observable, ListenerBajaPrecio listener) {
 		//Añade un subscritor al map de BajaPrecio, si no esta como clave lo añade
 		if(mapBajaPrecio.containsKey(observable)){
 			mapBajaPrecio.get(observable).add(listener);
@@ -22,13 +34,13 @@ public class Observer {
 		}
 	};
 	
-	public void removeBajaPrecio(Observable observable, ListenerBajaPrecio listener) {
+	public void removeBajaPrecio(Inmueble observable, ListenerBajaPrecio listener) {
 		//elimina a un subscriptor de el map de BajaPrecio
 		if(mapBajaPrecio.containsKey(observable)) {
 			mapBajaPrecio.get(observable).remove(listener);
 		};
 	};
-	public void attachCancelacion(Observable observable, ListenerCancelacion listener) {
+	public void attachCancelacion(Inmueble observable, ListenerCancelacion listener) {
 		//Añade un subscritor al map de cancelacion, si no esta como clave lo añade
 		if(mapCancelacion.containsKey(observable)){
 			mapCancelacion.get(observable).add(listener);
@@ -39,13 +51,13 @@ public class Observer {
 		}
 	};
 	
-	public void removeCancelacion(Observable observable, ListenerCancelacion listener) {
+	public void removeCancelacion(Inmueble observable, ListenerCancelacion listener) {
 		//elimina a un subscriptor de el map de Cancelacion
 		if(mapCancelacion.containsKey(observable)) {
 			mapCancelacion.get(observable).remove(listener);
 		};
 	};
-	public void attachReserva(Observable observable, ListenerReserva listener) {
+	public void attachReserva(Inmueble observable, ListenerReserva listener) {
 		//Añade un subscritor al map de subcriptores, si no esta como clave lo añade
 		if(mapReserva.containsKey(observable)){
 			mapReserva.get(observable).add(listener);
@@ -56,26 +68,26 @@ public class Observer {
 		}
 	};
 	
-	public void removeReserva(Observable observable, ListenerReserva listener) {
+	public void removeReserva(Inmueble observable, ListenerReserva listener) {
 		//elimina a un subscriptor de el map de reservas
 		if(mapReserva.containsKey(observable)) {
 			mapReserva.get(observable).remove(listener);
 		};
 	};
 	
-	public void notifyReserva(Observable observable) {
+	public void notifyReserva(Inmueble observable) {
 		//notifica a cada uno de los subscriptores
-		mapReserva.get(observable).forEach(sub -> sub.notifyReserva("Se ha reservado el inmueble"));
+		mapReserva.get(observable).forEach(sub -> sub.notifyReserva(observable));
 	};
 	
-	public void notifyCancelacion(Observable observable) {
+	public void notifyCancelacion(Inmueble observable) {
 		//notifica a cada uno de los subscriptores
-		mapCancelacion.get(observable).forEach(sub -> sub.popUp("El "+observable.getTipoInmueble()+" que te interesa se ha liberado! Corre a reservarlo!"));
+		mapCancelacion.get(observable).forEach(sub -> sub.popUp(observable));
 	};
 	
-	public void notifyBajaPrecio(Observable observable) {
+	public void notifyBajaPrecio(Inmueble observable) {
 		//notifica a cada uno de los subscriptores
-		mapBajaPrecio.get(observable).forEach(sub -> sub.publish("Un "+ observable.getTipoInmueble() + " a tan solo " + observable.getPrecio() + " pesos"));
+		mapBajaPrecio.get(observable).forEach(sub -> sub.publish(observable));
 	};
 	
 	
