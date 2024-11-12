@@ -41,9 +41,11 @@ class ReservaTest {
 		when(inmueble1.getDueño()).thenReturn(propMock);
 		when(inqMock.getEmail()).thenReturn("email");
 		when(propMock.getEmail()).thenReturn("email");
+		when(inmueble1.getCiudad()).thenReturn("BuenosAires");
 		
 		this.reserva= new Reserva(inmueble1,formaPago,checkIn,checkOut,inqMock,imailMock);
 	}
+
 	@Test
 	void seApruebaUnaReserva() {
 		reserva.aprobarReserva();
@@ -63,6 +65,13 @@ class ReservaTest {
 	void seChequeaLosCostos() {
 		assertEquals(400, reserva.getMontoTotal());
 		verify(inmueble1,times(1)).getMontoTotal(checkIn,checkOut);
+	}
+	
+	@Test
+	void seChequeaInformacionDeLaReserva() {
+		assertEquals(inqMock, reserva.getInfoPosibleInquilino());
+		assertEquals("BuenosAires", reserva.getCiudad());
+		verify(inmueble1,times(1)).getCiudad();
 	}
 	
 	@Test

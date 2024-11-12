@@ -1,5 +1,8 @@
 package tpFinal_POO2.SitioWeb;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -10,66 +13,75 @@ import tpFinal_POO2.Usuario.Usuario;
 
 public class SitioWeb {
 	
-	private Set<Categoria>categorias;
+	private Set<TipoDeInmueble>tipoDeInmuebles;
 	private Set<Servicio>servicios;
 	private Set<Usuario>usuarios;
 	
-	public void recibeSolicitudDeAltaDeInmueble(Inmueble inmuebleNuevo) {
-		this.inmueblesSolicitados.add(inmuebleNuevo);
+	public SitioWeb() {
+		this.tipoDeInmuebles=new HashSet<TipoDeInmueble>();
+		this.servicios=new HashSet<Servicio>();
+		this.usuarios=new HashSet<Usuario>();
+	}
+	
+	public void addUsuario(Usuario u) {
+		usuarios.add(u);
+	}
+
+	public boolean esValidoInmueble(Inmueble i) {
+		return sonValidosLosServicios(i.getServicios()) && esValidoTipoDeInmueble(i.getTipoDeInmueble());
+	}
+	
+	public boolean esValidoTipoDeInmueble(TipoDeInmueble tipoDeInmueble) {
+		return tipoDeInmuebles.stream().anyMatch(tipoDeInmueble::equals);
+	}
+
+	public boolean sonValidosLosServicios(List<Servicio> serviciosInm) {
+		return serviciosInm.stream().allMatch(servicios::contains);
 	}
 
 	public List<Inmueble> filtrarPropiedadesPor(FiltroCompuesto filtro){
-		return filtro.filtrar(misPropiedades);
+		return filtro.filtrar(this.getInmuebles());
 	}
 
-	public List<Reserva> getReservasUsuario(Usuario usuario) {
-		return usuario.getReservas();
+	public void darAltaTipoInmueble(TipoDeInmueble c) {
+		tipoDeInmuebles.add(c);
 	}
 
-	public List<Reserva>  getReservasEn(Usuario u, String ciudad) {
-		return this.getReservasUsuario(u).stream().filter(r->r.getInmueble().getCiudad().equals(ciudad)).toList();
+	public void darAltaCategoriaRankeo(Categoria c) {
+		// DUDA
 	}
 
-	public List<String> getCiudadesConReservas(Usuario usuario) {
-		return this.getReservasUsuario(usuario).stream().map(Reserva::getCiudad)
-			    										.collect(Collectors.toList());
+	public void darAltaServicios(Servicio s) {
+		servicios.add(s);
 	}
 
-	public List<Reserva> getReservasFuturas(Usuario usuario) {
-		return ;
+	public Set<Usuario> getTopTenInquilinos(){
+		Set<Usuario>topTen = new HashSet<Usuario>();
+		Set<Usuario>sinLosMejores = this.usuarios;
+		while( topTen.size()<10 && !sinLosMejores.isEmpty() ){
+			topTen.add(this.getInquilinoConMasReservas(sinLosMejores));
+			sinLosMejores.remove(this.getInquilinoConMasReservas(sinLosMejores));
+		}
+		return topTen;
 	}
 
-
-	public int getPuntajePromedio(Usuario usuario) {
-		
+	public Usuario getInquilinoConMasReservas(Set<Usuario> usuarios) {
+	    return usuarios.stream()
+                		.max(Comparator.comparingInt(usuario -> usuario.getReservas().size()))
+                		.orElse(null);
 	}
 
-	public void getPuntajeTotal(Usuario usuario) {
-		
+	public List<Inmueble> getInmuebles(){
+		return usuarios.stream().flatMap(usuario -> usuario.getInmuebles().stream())
+                				.collect(Collectors.toList());
+	}
+	
+	public float getTasaDeOcupacion() {
+		return  this.cantidadDeInmueblesOcupados() / this.getInmuebles().size();
 	}
 
-	public void darAltaTipoInmueble(Categoria cat) {
-		
-	}
-
-	public void darAltaCategoriaRankeo(Categoria cat) {
-		
-	}
-
-	public void darAltaServicios(Servicio serv) {
-		
-	}
-
-	public List<Usuario> getTopTenInquilinos(){
-		return ;
-	}
-
-	public List<Inmueble> getInmueblesLibres(){
-		return ;
-	}
-
-	public Double getTasaDeOcupacion() {
-		return  ;
+	public int cantidadDeInmueblesOcupados() {
+		return 0;   // TERMINAR
 	}
 	
 	

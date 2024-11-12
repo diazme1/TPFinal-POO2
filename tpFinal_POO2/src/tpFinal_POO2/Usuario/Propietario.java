@@ -1,5 +1,10 @@
 package tpFinal_POO2.Usuario;
 
-public interface Propietario {
+import java.util.ArrayList;
 
+import tpFinal_POO2.Inmueble.Inmueble;
+
+public interface Propietario {
+	
+	public ArrayList<Inmueble> getInmuebles();
 }

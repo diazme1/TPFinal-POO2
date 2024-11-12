@@ -3,8 +3,11 @@ package tpFinal_POO2.Inmueble;
 
 
 import java.time.LocalDate;
+import java.util.List;
 
 import tpFinal_POO2.Reserva.Reserva;
+import tpFinal_POO2.SitioWeb.Servicio;
+import tpFinal_POO2.SitioWeb.TipoDeInmueble;
 import tpFinal_POO2.Usuario.Usuario;
 import tpFinal_POO2.Valoracion.Valoracion;
 
@@ -47,6 +50,16 @@ public class Inmueble {
 			fechaActual =fechaActual.plusDays(1);
 		}
 		return valFinal;
+	}
+
+	public TipoDeInmueble getTipoDeInmueble() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Servicio> getServicios() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
