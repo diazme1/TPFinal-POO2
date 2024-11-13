@@ -13,33 +13,34 @@ import tpFinal_POO2.Inmueble.Inmueble;
 class FiltroCantHuespedesTest {
 
 	private FiltroCantHuespedes filtro;
-	private Inmueble inmueble;
 	private FiltroCompuesto filtroCompuesto;
 	
 	@BeforeEach
 	void setUp() throws Exception {
 		this.filtro = new FiltroCantHuespedes(5);
-		this.inmueble = mock(Inmueble.class);
 		this.filtroCompuesto = mock(FiltroCompuesto.class);
 		
 	}
 
 	@Test
 	void testFiltroCantHuespedesCumpleParaInmueble_MismaCantHuespedes() {
-		when(this.inmueble.getCantHuespedes()).thenReturn(5);
-		assertEquals(true, this.filtro.cumplePara(this.inmueble, this.filtroCompuesto));
+		Inmueble inmueble = mock(Inmueble.class);
+		when(inmueble.getCantHuespedes()).thenReturn(5);
+		assertEquals(true, this.filtro.cumplePara(inmueble, this.filtroCompuesto));
 	}
 	
 	@Test
 	void testFiltroCantHuespedesCumpleParaInmueble_MasCantHuespedes() {
-		when(this.inmueble.getCantHuespedes()).thenReturn(7);
-		assertEquals(true, this.filtro.cumplePara(this.inmueble, this.filtroCompuesto));
+		Inmueble inmueble = mock(Inmueble.class);
+		when(inmueble.getCantHuespedes()).thenReturn(7);
+		assertEquals(true, this.filtro.cumplePara(inmueble, this.filtroCompuesto));
 	}
 	
 	@Test
 	void testFiltroCantHuespedesNoCumpleParaInmueble() {
-		when(this.inmueble.getCantHuespedes()).thenReturn(4);
-		assertEquals(false, this.filtro.cumplePara(this.inmueble, this.filtroCompuesto));
+		Inmueble inmueble = mock(Inmueble.class);
+		when(inmueble.getCantHuespedes()).thenReturn(4);
+		assertEquals(false, this.filtro.cumplePara(inmueble, this.filtroCompuesto));
 	}
 
 }

@@ -1,4 +1,4 @@
-package tpFinal_POO2.PoliticasCancelacionTest;
+package tpFinal_POO2.politicasCancelacionTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

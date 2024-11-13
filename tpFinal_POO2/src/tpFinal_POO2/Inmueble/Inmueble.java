@@ -85,7 +85,15 @@ public class Inmueble {
 	
 	public Set<Reserva> getReservasCondicionales() {
 		return this.reservasEnCola;
-	}
+	};
+	
+	public int getCantHuespedes() {
+		return this.cantHuespedes;
+	};
+	
+	public String getCiudad() {
+		return this.ciudad;
+	};
 	
 	public double getMontoTotalPara(LocalDate fechaIni, LocalDate fechaFin) {
 		
@@ -197,5 +205,7 @@ public class Inmueble {
 		
 		this.politicaCancelacion.cancelarReserva(reservaCancelada, diaHecho);
 	}
+
+	
 	
 }
