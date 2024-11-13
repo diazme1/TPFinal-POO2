@@ -12,20 +12,32 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="/Users/emiliadiaz/eclipse-workspace/tpIntegrador/TPFinal-POO2/tpFinal_POO2/libs/byte-buddy-1.15.7.jar">
+=======
+	<classpathentry kind="lib" path="C:/Users/Zanahoria Asesina/Documents/mockito-core-5.14.2.jar">
+>>>>>>> Diego
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="/Users/emiliadiaz/eclipse-workspace/tpIntegrador/TPFinal-POO2/tpFinal_POO2/libs/mockito-core-5.14.2.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="/Users/emiliadiaz/eclipse-workspace/tpIntegrador/TPFinal-POO2/tpFinal_POO2/libs/net.bytebuddy.byte-buddy-agent_1.15.7.jar">
+=======
+	<classpathentry kind="lib" path="C:/Users/Zanahoria Asesina/Documents/net.bytebuddy.byte-buddy-agent_1.15.7.jar">
+>>>>>>> Diego
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+<<<<<<< HEAD
+=======
+	<classpathentry kind="lib" path="C:/Users/Zanahoria Asesina/Documents/byte-buddy-1.15.7.jar"/>
+>>>>>>> Diego
 	<classpathentry kind="output" path="bin"/>
 </classpath>
