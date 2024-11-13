@@ -1,10 +1,12 @@
 package tpFinal_POO2.Reserva;
 
+import java.time.LocalDate;
+
 import tpFinal_POO2.Valoracion.Valoracion;
 
 public abstract class EstadoReserva {
 	
-	public void cancelarReserva(Reserva r) {};
+	public void cancelarReserva(Reserva r, LocalDate diaHecho) {};
 	
 	public void siguienteEstado(Reserva r) {};
 	
@@ -25,3 +27,4 @@ public abstract class EstadoReserva {
 	public boolean esFinalizada() {return false;}
 	
 }
+

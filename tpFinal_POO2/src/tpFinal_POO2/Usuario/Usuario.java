@@ -31,4 +31,19 @@ public class Usuario implements Inquilino,Propietario{
 		return null;
 	}
 
+	public Object esInquilino() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public int promedioRankingInquilino() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int cantReservasFinalizadasInquilino() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -1,14 +1,16 @@
 package tpFinal_POO2.Reserva;
 
+import java.time.LocalDate;
+
 public class EstadoAceptada extends EstadoReserva {
 
 	public EstadoAceptada() {}
 
 	@Override
-	public void cancelarReserva(Reserva r) {
+	public void cancelarReserva(Reserva r, LocalDate diaHecho) {
 		r.cambiaEstadoA(new EstadoCancelada());
 		r.enviarMailCancelacion();
-		r.getInmueble().reservaCancelada(r);
+		r.getInmueble().reservaCancelada(r,diaHecho);
 	} 
 
 	@Override

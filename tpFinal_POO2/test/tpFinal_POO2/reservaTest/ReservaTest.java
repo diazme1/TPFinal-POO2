@@ -60,7 +60,7 @@ class ReservaTest {
 	@Test
 	void seCancelaUnaReserva() {
 		reserva.aprobarReserva();
-		this.reserva.cancelarReserva();
+		this.reserva.cancelarReserva(LocalDate.of(2022, 10, 10));
 		assertTrue(this.reserva.estaCancelada());
 		verify(imailMock,times(1)).sendEmail("email", "Reserva Cancelada!", "Se cancelo la reserva ;(");
 		assertFalse(reserva.estaAprobada());

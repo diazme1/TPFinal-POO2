@@ -37,7 +37,7 @@ public class Inmueble {
 		return null;
 	}
 
-	public void reservaCancelada(Reserva r) {
+	public void reservaCancelada(Reserva r, LocalDate diaHecho) {
 		// TODO Auto-generated method stub
 		
 	}

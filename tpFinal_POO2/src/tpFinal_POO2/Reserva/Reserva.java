@@ -59,12 +59,12 @@ public class Reserva {
 		return this.inquilino;
 	}
 	
-	public int getMontoTotal() {
+	public double getMontoTotal() {
 		return this.inmueble.getMontoTotal(checkIn,checkOut);
 	}
 	
-	public void cancelarReserva() {
-		this.estado.cancelarReserva(this);
+	public void cancelarReserva(LocalDate diaHecho) {
+		this.estado.cancelarReserva(this,diaHecho);
 	}
 	
 	public Usuario getPropietario() {
