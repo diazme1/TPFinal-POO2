@@ -26,8 +26,20 @@ class PeriodosTest {
 	}
 	
 	@Test
-	void testFechaIncluidaEnPeriodo() {
+	void testFechaIncluidaEnPeriodo_EnElMedio() {
 		LocalDate fecha = LocalDate.of(2024, 1, 12);
+		assertTrue(periodo.incluidoEnPeriodo(fecha));
+	}
+	
+	@Test
+	void testFechaIncluidaEnPeriodo_IgualCheckIn() {
+		LocalDate fecha = LocalDate.of(2024, 1, 10);
+		assertTrue(periodo.incluidoEnPeriodo(fecha));
+	}
+	
+	@Test
+	void testFechaIncluidaEnPeriodo_IgualCheckOut() {
+		LocalDate fecha = LocalDate.of(2024, 1, 15);
 		assertTrue(periodo.incluidoEnPeriodo(fecha));
 	}
 	

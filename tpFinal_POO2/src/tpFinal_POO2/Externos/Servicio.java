@@ -9,4 +9,8 @@ public class Servicio {
 		this.nombreServicio = servicio;
 	}
 	
+	public String getServicio() {
+		return this.nombreServicio;
+	}
+	
 }

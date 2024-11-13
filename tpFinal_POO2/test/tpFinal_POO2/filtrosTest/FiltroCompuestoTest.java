@@ -64,8 +64,8 @@ class FiltroCompuestoTest {
 		this.inmuebles.add(inmueble1);
 		this.inmuebles.add(inmueble2);
 		//Comportamiento mocks para disponibilidad de fechas true.
-		when(inmueble1.estaDisponibleEn(fechaIni, fechaFin)).thenReturn(true);
-		when(inmueble2.estaDisponibleEn(fechaIni, fechaFin)).thenReturn(true);
+		when(inmueble1.estaDisponible(fechaIni, fechaFin)).thenReturn(true);
+		when(inmueble2.estaDisponible(fechaIni, fechaFin)).thenReturn(true);
 		//Comportamiento mocks para filtro ciudad true.
 		when(inmueble1.getCiudad()).thenReturn("Quilmes");
 		when(inmueble2.getCiudad()).thenReturn("Quilmes");
@@ -83,8 +83,8 @@ class FiltroCompuestoTest {
 		this.inmuebles.add(inmueble1);
 		this.inmuebles.add(inmueble2);
 		//Comportamiento mocks para disponibilidad de fechas true.
-		when(inmueble1.estaDisponibleEn(fechaIni, fechaFin)).thenReturn(true);
-		when(inmueble2.estaDisponibleEn(fechaIni, fechaFin)).thenReturn(false);
+		when(inmueble1.estaDisponible(fechaIni, fechaFin)).thenReturn(true);
+		when(inmueble2.estaDisponible(fechaIni, fechaFin)).thenReturn(false);
 		//Comportamiento mocks para filtro ciudad true.
 		when(inmueble1.getCiudad()).thenReturn("Quilmes");
 		when(inmueble2.getCiudad()).thenReturn("La Plata");
@@ -102,8 +102,8 @@ class FiltroCompuestoTest {
 		this.inmuebles.add(inmueble1);
 		this.inmuebles.add(inmueble2);
 		//Comportamiento mocks para disponibilidad de fechas true.
-		when(inmueble1.estaDisponibleEn(fechaIni, fechaFin)).thenReturn(false);
-		when(inmueble2.estaDisponibleEn(fechaIni, fechaFin)).thenReturn(true);
+		when(inmueble1.estaDisponible(fechaIni, fechaFin)).thenReturn(false);
+		when(inmueble2.estaDisponible(fechaIni, fechaFin)).thenReturn(true);
 		//Comportamiento mocks para filtro ciudad true.
 		when(inmueble1.getCiudad()).thenReturn("Quilmes");
 		when(inmueble2.getCiudad()).thenReturn("La Plata");
@@ -133,8 +133,8 @@ class FiltroCompuestoTest {
 		when(filtroHuespedes.cumplePara(inmueble1, this.filtro)).thenReturn(true);
 		when(filtroHuespedes.cumplePara(inmueble2, this.filtro)).thenReturn(true);
 		//Comportamiento mocks para disponibilidad de fechas true.
-		when(inmueble1.estaDisponibleEn(fechaIni, fechaFin)).thenReturn(true);
-		when(inmueble2.estaDisponibleEn(fechaIni, fechaFin)).thenReturn(true);
+		when(inmueble1.estaDisponible(fechaIni, fechaFin)).thenReturn(true);
+		when(inmueble2.estaDisponible(fechaIni, fechaFin)).thenReturn(true);
 		//Comportamiento mocks para filtro ciudad true.
 		when(inmueble1.getCiudad()).thenReturn("Quilmes");
 		when(inmueble2.getCiudad()).thenReturn("Quilmes");
@@ -164,8 +164,8 @@ class FiltroCompuestoTest {
 		when(filtroHuespedes.cumplePara(inmueble1, this.filtro)).thenReturn(true);
 		when(filtroHuespedes.cumplePara(inmueble2, this.filtro)).thenReturn(false);
 		//Comportamiento mocks para disponibilidad de fechas true.
-		when(inmueble1.estaDisponibleEn(fechaIni, fechaFin)).thenReturn(true);
-		when(inmueble2.estaDisponibleEn(fechaIni, fechaFin)).thenReturn(true);
+		when(inmueble1.estaDisponible(fechaIni, fechaFin)).thenReturn(true);
+		when(inmueble2.estaDisponible(fechaIni, fechaFin)).thenReturn(true);
 		//Comportamiento mocks para filtro ciudad true.
 		when(inmueble1.getCiudad()).thenReturn("Quilmes");
 		when(inmueble2.getCiudad()).thenReturn("Quilmes");
@@ -195,8 +195,8 @@ class FiltroCompuestoTest {
 		when(filtroHuespedes.cumplePara(inmueble1, this.filtro)).thenReturn(true);
 		when(filtroHuespedes.cumplePara(inmueble2, this.filtro)).thenReturn(false);
 		//Comportamiento mocks para disponibilidad de fechas true.
-		when(inmueble1.estaDisponibleEn(fechaIni, fechaFin)).thenReturn(false);
-		when(inmueble2.estaDisponibleEn(fechaIni, fechaFin)).thenReturn(true);
+		when(inmueble1.estaDisponible(fechaIni, fechaFin)).thenReturn(false);
+		when(inmueble2.estaDisponible(fechaIni, fechaFin)).thenReturn(true);
 		//Comportamiento mocks para filtro ciudad true.
 		when(inmueble1.getCiudad()).thenReturn("Quilmes");
 		when(inmueble2.getCiudad()).thenReturn("CABA");

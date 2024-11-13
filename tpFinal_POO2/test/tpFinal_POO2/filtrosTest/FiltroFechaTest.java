@@ -30,7 +30,7 @@ class FiltroFechaTest {
 	void testCumpleParaInmueble() {
 		LocalDate fechaIni = LocalDate.of(2024, 1, 5);
 		LocalDate fechaFin = LocalDate.of(2024, 1, 6);
-		when(inmueble.estaDisponibleEn(fechaIni, fechaFin)).thenReturn(true);
+		when(inmueble.estaDisponible(fechaIni, fechaFin)).thenReturn(true);
 		
 		assertEquals(true, this.filtro.cumplePara(this.inmueble, this.filtroCompuesto));
 		
@@ -40,7 +40,7 @@ class FiltroFechaTest {
 	void testNoCumpleParaInmueble() {
 		LocalDate fechaIni = LocalDate.of(2024, 1, 5);
 		LocalDate fechaFin = LocalDate.of(2024, 1, 6);
-		when(inmueble.estaDisponibleEn(fechaIni, fechaFin)).thenReturn(false);
+		when(inmueble.estaDisponible(fechaIni, fechaFin)).thenReturn(false);
 		
 		assertEquals(false, this.filtro.cumplePara(this.inmueble, this.filtroCompuesto));
 	}

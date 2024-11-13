@@ -1,10 +1,11 @@
 package tpFinal_POO2.Inmueble;
 
-import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.OptionalDouble;
 import java.util.Set;
 
 import tpFinal_POO2.Externos.FormaDePago;
@@ -20,15 +21,15 @@ import tpFinal_POO2.PoliticasCancelacion.SinCancelacion;
 public class Inmueble {
 
 	private Propietario dueño;
-	private TipoInmueble tipoInmueble;
+	private String tipoInmueble;
 	private double metrosCuadrados;
 	private String pais;
 	private String ciudad;
 	private String direccion;
-	private List<Servicio> servicios;
+	private List<String> servicios;
 	private int cantHuespedes;
-	private Time checkIn;
-	private Time checkOut;
+	private LocalTime checkIn;
+	private LocalTime checkOut;
 	private double precioDefault;
 	private Set<Periodo> periodosExtraordinarios;
 	private List<Valoracion> valoraciones;
@@ -36,10 +37,11 @@ public class Inmueble {
 	private Set<Reserva> reservasEnCola;
 	private Set<FormaDePago> formasDePagoAdmitidas;
 	private PoliticaCancelacion politicaCancelacion;
+
 	
-	
-	public Inmueble(TipoInmueble tipo, double metros, String pais, String ciudad, String dir, List<Servicio> servicios, int cantHuespedes, Time checkIn, Time checkOut, double precio) {
+	public Inmueble(Propietario propietario, String tipo, double metros, String pais, String ciudad, String dir, List<String> servicios, int cantHuespedes, LocalTime checkIn, LocalTime checkOut, double precio) {
 		super();
+		this.dueño = propietario;
 		this.tipoInmueble = tipo;
 		this.metrosCuadrados = metros;
 		this.pais = pais;
@@ -59,6 +61,7 @@ public class Inmueble {
 		this.valoraciones = new ArrayList<Valoracion>();
 		//Inicialmente no hay formas de pago definidas. 
 		this.formasDePagoAdmitidas = new HashSet<FormaDePago>();
+		//Por defecto no hay politica de cancelación consignada.
 		this.politicaCancelacion = new SinCancelacion();
 	}
 	
@@ -67,11 +70,11 @@ public class Inmueble {
 		return this.dueño;
 	};
 	
-	public List<Servicio> getServicios(){
+	public List<String> getServicios(){
 		return this.servicios;
 	};
 	
-	public TipoInmueble getTipoInmueble() {
+	public String getTipoInmueble() {
 		return this.tipoInmueble; 
 	};
 	
@@ -87,12 +90,20 @@ public class Inmueble {
 		return this.reservasEnCola;
 	};
 	
+	public Set<Reserva> getReservas(){
+		return this.reservas;
+	};
+	
 	public int getCantHuespedes() {
 		return this.cantHuespedes;
 	};
 	
 	public String getCiudad() {
 		return this.ciudad;
+	};
+	
+	public Set<FormaDePago> getFormasDePagoAdmitidas() {
+		return this.formasDePagoAdmitidas;
 	};
 	
 	public double getMontoTotalPara(LocalDate fechaIni, LocalDate fechaFin) {
@@ -107,21 +118,43 @@ public class Inmueble {
 		return valorAcumulado;
 	};
 	
-	protected double getValorDeFecha(LocalDate fecha) {
+	public double getValorDeFecha(LocalDate fecha) {
 		
-		double valor = 0.00;
+		double valor = this.precioDefault;
 		
 		for (Periodo p : this.periodosExtraordinarios) {
 			
 			if (p.incluidoEnPeriodo(fecha)) {
-				valor = this.precioDefault + p.getIncremento();
-			} else {
-				valor = this.precioDefault;
+				return valor + p.getIncremento();
 			}
 		}
 		
 		return valor;
 	};
+	
+	public double promedioPuntajeTotal() {
+		
+		OptionalDouble promedio = this.getValoracionesRecibidas().stream().mapToInt(v -> v.getPuntaje()).average();
+		
+		if (promedio.isPresent()) {
+			return promedio.getAsDouble();
+		} else {
+			return 0.00;
+		}
+	}
+	
+	public double promedioPuntajeCategoria(String categoria) {
+		
+		OptionalDouble promedio = this.getValoracionesRecibidas().stream().
+																	filter(v -> v.getCategoria().equals(categoria)).
+																	mapToInt(v -> v.getPuntaje()).average();
+		
+		if (promedio.isPresent()) {
+			return promedio.getAsDouble();
+		} else {
+			return 0.00;
+		}
+	}
 	
 	//Setters:
 	public void setPoliticaCancelacion(PoliticaCancelacion newPolitica) {
@@ -130,7 +163,10 @@ public class Inmueble {
 
 	//Agregar valoración:
 	public void agregarValoracion(Valoracion val) {
-		this.valoraciones.add(val);
+		
+		if(this.dueño.validarCategoriaInmueble(val.getCategoria())) {
+			this.valoraciones.add(val);
+		}
 	};
 	
 	//Agregar periodo extraordinadrio:
@@ -143,7 +179,13 @@ public class Inmueble {
 		this.formasDePagoAdmitidas.add(metodo);
 	};
 	
+	//Agregar servicio:
+	public void agregarServicio(String servicio) {
+		this.servicios.add(servicio);
+	};
+	
 	//Agregar reserva:
+	//Debería ser protected, es public por testeo:
 	public void agregarReserva(Reserva reserva) {
 		this.reservas.add(reserva);
 	};
@@ -168,13 +210,7 @@ public class Inmueble {
 		
 		List<Reserva> reservasAceptadas = this.getReservasAceptadas();
 		
-		for (Reserva r : reservasAceptadas) {
-			if (r.haySolapamiento(checkIn, checkOut)) {
-				return false;
-			}
-		}
-		return true;
-		
+		return !reservasAceptadas.stream().anyMatch(r -> r.haySolapamiento(checkIn, checkOut));
 	}
 	
 	//Generar una reserva para el inmueble dado.
@@ -183,6 +219,7 @@ public class Inmueble {
 		
 		if (this.estaDisponible(checkIn, checkOut)) {
 			this.agregarReserva(newReserva);
+			inquilino.agregarReserva(newReserva);
 		} else {
 			this.agregarReservaCondicional(newReserva);
 		}
@@ -205,7 +242,6 @@ public class Inmueble {
 		
 		this.politicaCancelacion.cancelarReserva(reservaCancelada, diaHecho);
 	}
-
 	
 	
 }

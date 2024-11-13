@@ -29,7 +29,7 @@ class FiltroPrecioTest {
 	void testFiltroPrecioCumpleParaInmueble() {
 		when(this.filtroCompuesto.getFechaInicio()).thenReturn(LocalDate.of(2024, 1, 1));
 		when(this.filtroCompuesto.getFechaFin()).thenReturn(LocalDate.of(2024, 2, 1));
-		when(this.inmueble.getMontoTotal(this.filtroCompuesto.getFechaInicio(), this.filtroCompuesto.getFechaFin())).thenReturn(6000.00);
+		when(this.inmueble.getMontoTotalPara(this.filtroCompuesto.getFechaInicio(), this.filtroCompuesto.getFechaFin())).thenReturn(6000.00);
 		assertEquals(true, this.filtro.cumplePara(this.inmueble, this.filtroCompuesto));
 	}
 
@@ -37,7 +37,7 @@ class FiltroPrecioTest {
 	void testFiltroPrecioNoCumpleParaInmueble_MayorAPrecioMaximo() {
 		when(this.filtroCompuesto.getFechaInicio()).thenReturn(LocalDate.of(2024, 1, 1));
 		when(this.filtroCompuesto.getFechaFin()).thenReturn(LocalDate.of(2024, 2, 1));
-		when(this.inmueble.getMontoTotal(this.filtroCompuesto.getFechaInicio(), this.filtroCompuesto.getFechaFin())).thenReturn(8000.00);
+		when(this.inmueble.getMontoTotalPara(this.filtroCompuesto.getFechaInicio(), this.filtroCompuesto.getFechaFin())).thenReturn(8000.00);
 		assertEquals(false, this.filtro.cumplePara(this.inmueble, this.filtroCompuesto));
 	}
 	
@@ -45,7 +45,7 @@ class FiltroPrecioTest {
 	void testFiltroPrecioNoCumpleParaInmueble_MenorAPrecioMinimo() {
 		when(this.filtroCompuesto.getFechaInicio()).thenReturn(LocalDate.of(2024, 1, 1));
 		when(this.filtroCompuesto.getFechaFin()).thenReturn(LocalDate.of(2024, 2, 1));
-		when(this.inmueble.getMontoTotal(this.filtroCompuesto.getFechaInicio(), this.filtroCompuesto.getFechaFin())).thenReturn(4000.00);
+		when(this.inmueble.getMontoTotalPara(this.filtroCompuesto.getFechaInicio(), this.filtroCompuesto.getFechaFin())).thenReturn(4000.00);
 		assertEquals(false, this.filtro.cumplePara(this.inmueble, this.filtroCompuesto));
 	}
 	

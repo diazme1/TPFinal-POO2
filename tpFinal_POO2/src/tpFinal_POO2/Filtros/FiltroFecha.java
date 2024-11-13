@@ -17,7 +17,7 @@ public class FiltroFecha implements Filtro {
 	
 	public boolean cumplePara(Inmueble inmueble, FiltroCompuesto filtro){
 		
-		return inmueble.estaDisponibleEn(this.checkIn, this.checkOut);
+		return inmueble.estaDisponible(this.checkIn, this.checkOut);
 	};
 	
 }
