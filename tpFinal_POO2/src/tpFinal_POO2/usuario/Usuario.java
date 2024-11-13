@@ -40,11 +40,15 @@ public class Usuario implements Inquilino,Propietario{
 
 	public String getTelefono() {
 		return telefono;
-	}	
+	}
+	
+	private boolean esValidaCategoriaPropietario(String categoria){
+		return this.sitio.esValidaCategoriaPropietario(categoria);
+	}
 
 	@Override
 	public Double promedioValoracionPropietario() {
-		OptionalDouble promedioProp = this.valoraciones.stream().filter(v->v.getCategoria()=="Propietario").mapToInt(v->v.getVal()).average();
+		OptionalDouble promedioProp = this.valoraciones.stream().filter(v->this.esValidaCategoriaPropietario(v.getCategoria())).mapToInt(v->v.getVal()).average();
 		if (promedioProp.isPresent()) {
 			return promedioProp.getAsDouble();
 		}else {
@@ -54,23 +58,27 @@ public class Usuario implements Inquilino,Propietario{
 
 	@Override
 	public ArrayList<Valoracion> getValoracionesPropietario() {
-		// 
-		return this.valoraciones.stream().filter(v->v.getCategoria()=="Propietario").collect(Collectors.toCollection(ArrayList::new));
+		return this.valoraciones.stream().filter(v->this.esValidaCategoriaPropietario(v.getCategoria())).collect(Collectors.toCollection(ArrayList::new));
+	}
+	
+	private boolean esValidaCategoriaInquilino(String categoria){
+		return this.sitio.esValidaCategoriaInquilino(categoria);
 	}
 
 	@Override
 	public double promedioValoracionInquilino() {
-	    OptionalDouble promedioProp = this.valoraciones.stream().filter(v->v.getCategoria()=="Inquilino").mapToInt(v->v.getVal()).average();
+	    OptionalDouble promedioProp = this.valoraciones.stream().filter(v->this.esValidaCategoriaInquilino(v.getCategoria())).mapToInt(v->v.getVal()).average();
 		if (promedioProp.isPresent()) {
 			return promedioProp.getAsDouble();
 		}else {
 			return 0.0;
 		}
 	}
+	
 
 	@Override
 	public ArrayList<Valoracion> getValoracionesInquilino() {
-		return this.valoraciones.stream().filter(v->v.getCategoria()=="Inquilino").collect(Collectors.toCollection(ArrayList::new));
+		return this.valoraciones.stream().filter(v->this.esValidaCategoriaInquilino(v.getCategoria())).collect(Collectors.toCollection(ArrayList::new));
 	}
 	public void agregarValoracion(Valoracion val) {
 		this.valoraciones.add(val);
@@ -130,6 +138,10 @@ public class Usuario implements Inquilino,Propietario{
 	@Override
 	public ArrayList<Inmueble> getInmuebles() {
 		return this.inmuebles;
+	}
+
+	@Override
+	public void abonarMonto(Double monto) {
 	}
 	
 }

@@ -12,4 +12,5 @@ public interface Inquilino {
 	public ArrayList <Reserva> reservasEnCiudad(String ciudad);
 	public HashSet<String> ciudadesReservadas();
 	public void añadirReserva(Reserva reserva);
+	public void abonarMonto(Double monto);
 }
