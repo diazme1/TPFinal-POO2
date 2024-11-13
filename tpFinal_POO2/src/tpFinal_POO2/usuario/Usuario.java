@@ -81,7 +81,9 @@ public class Usuario implements Inquilino,Propietario{
 		return this.valoraciones.stream().filter(v->this.esValidaCategoriaInquilino(v.getCategoria())).collect(Collectors.toCollection(ArrayList::new));
 	}
 	public void agregarValoracion(Valoracion val) {
-		this.valoraciones.add(val);
+		if(this.esValidaCategoriaInquilino(val.getCategoria()) || this.esValidaCategoriaPropietario(val.getCategoria())) {
+			this.valoraciones.add(val);
+		}
 	}
 	
 	public void darDeAltaInmueble(Inmueble inmu) {

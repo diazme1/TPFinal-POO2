@@ -25,6 +25,9 @@ class UsuarioTest {
 	}
 	@Test
 	void UsuarioValoracionTest() {
+		Valoracion valInm = mock(Valoracion.class);
+		when(valInm.getCategoria()).thenReturn("Inmueble");
+		user.agregarValoracion(valInm);
 		when(sitio.esValidaCategoriaInquilino("Inquilino")).thenReturn(true);
 		when(sitio.esValidaCategoriaPropietario("Inquilino")).thenReturn(false);
 		when(sitio.esValidaCategoriaInquilino("Propietario")).thenReturn(false);
