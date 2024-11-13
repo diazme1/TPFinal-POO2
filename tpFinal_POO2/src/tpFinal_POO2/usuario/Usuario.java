@@ -154,5 +154,9 @@ public class Usuario implements Inquilino,Propietario{
 			return 0.0;
 		}
 	}
+
+	@Override
+	public boolean validarCategoriaInmueble(String categoria) {
+		return this.sitio.esValidaCategoriaInmueble(categoria);	}
 	
 }

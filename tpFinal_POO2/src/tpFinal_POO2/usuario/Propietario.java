@@ -12,4 +12,5 @@ public interface Propietario {
 	public int vecesAlquilado();
 	public ArrayList<Reserva> reservasDeInmuebles();
 	public ArrayList<Inmueble> getInmuebles();
+	public boolean validarCategoriaInmueble(String categoria);
 }

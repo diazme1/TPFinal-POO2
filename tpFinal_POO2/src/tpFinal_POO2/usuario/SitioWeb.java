@@ -6,4 +6,5 @@ public interface SitioWeb {
 	public boolean esValidoInmueble(Inmueble im);
 	public boolean esValidaCategoriaInquilino(String categoria);
 	public boolean esValidaCategoriaPropietario(String categoria);
+	public boolean esValidaCategoriaInmueble(String categoria);
 }

@@ -93,5 +93,13 @@ class UsuarioTest {
 		
 	}
 	
+	@Test
+	void valorarInmuebleTest() {
+		when(sitio.esValidaCategoriaInmueble("valida")).thenReturn(true);
+		when(sitio.esValidaCategoriaInmueble("invalida")).thenReturn(false);
+		assertTrue(user.validarCategoriaInmueble("valida"));
+		assertFalse(user.validarCategoriaInmueble("invalida"));
+	}
+	
 
 }
