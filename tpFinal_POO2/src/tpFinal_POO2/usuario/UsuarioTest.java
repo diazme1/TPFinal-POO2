@@ -30,19 +30,25 @@ class UsuarioTest {
 		when(sitio.esValidaCategoriaInquilino("Propietario")).thenReturn(false);
 		when(sitio.esValidaCategoriaPropietario("Propietario")).thenReturn(true);
 		assertEquals(0.0, user.promedioValoracionInquilino());
+		assertEquals(0,0, user.promedioValoracionCategoria("Inquilino"));
 		assertEquals(0.0, user.promedioValoracionPropietario());
+		assertEquals(0,0, user.promedioValoracionCategoria("Propietario"));
 		Valoracion val =mock(Valoracion.class);
 		when(val.getCategoria()).thenReturn("Propietario");
 		when(val.getVal()).thenReturn(3);
 		user.agregarValoracion(val);
 		assertEquals(0.0, user.promedioValoracionInquilino());
+		assertEquals(0,0, user.promedioValoracionCategoria("Inquilino"));
 		assertEquals(3.0, user.promedioValoracionPropietario());
+		assertEquals(3,0, user.promedioValoracionCategoria("Propietario"));
 		Valoracion val2 =mock(Valoracion.class);
 		when(val2.getCategoria()).thenReturn("Inquilino");
 		when(val2.getVal()).thenReturn(4);
 		user.agregarValoracion(val2);
 		assertEquals(4.0, user.promedioValoracionInquilino());
+		assertEquals(4,0, user.promedioValoracionCategoria("Inquilino"));
 		assertEquals(3.0, user.promedioValoracionPropietario());
+		assertEquals(3,0, user.promedioValoracionCategoria("Propietario"));
 		assertTrue(user.getValoracionesInquilino().contains(val2) && user.getValoracionesInquilino().size() ==1);
 		assertTrue(user.getValoracionesPropietario().contains(val) && user.getValoracionesPropietario().size() ==1);
 	}

@@ -144,4 +144,13 @@ public class Usuario implements Inquilino,Propietario{
 	public void abonarMonto(Double monto) {
 	}
 	
+	public double promedioValoracionCategoria(String categoria) {
+	    OptionalDouble promedio = this.valoraciones.stream().filter(v->v.getCategoria() == categoria).mapToInt(v->v.getVal()).average();
+		if (promedio.isPresent()) {
+			return promedio.getAsDouble();
+		}else {
+			return 0.0;
+		}
+	}
+	
 }
