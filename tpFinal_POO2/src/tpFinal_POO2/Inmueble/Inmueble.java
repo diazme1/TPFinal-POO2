@@ -10,6 +10,7 @@ import java.util.Set;
 
 import tpFinal_POO2.Externos.FormaDePago;
 import tpFinal_POO2.Externos.Inquilino;
+import tpFinal_POO2.Externos.Observer;
 import tpFinal_POO2.Externos.Propietario;
 import tpFinal_POO2.Externos.Reserva;
 import tpFinal_POO2.Externos.Servicio;
@@ -37,6 +38,7 @@ public class Inmueble {
 	private Set<Reserva> reservasEnCola;
 	private Set<FormaDePago> formasDePagoAdmitidas;
 	private PoliticaCancelacion politicaCancelacion;
+	private Observer observer;
 
 	
 	public Inmueble(Propietario propietario, String tipo, double metros, String pais, String ciudad, String dir, List<String> servicios, int cantHuespedes, LocalTime checkIn, LocalTime checkOut, double precio) {
@@ -63,6 +65,8 @@ public class Inmueble {
 		this.formasDePagoAdmitidas = new HashSet<FormaDePago>();
 		//Por defecto no hay politica de cancelación consignada.
 		this.politicaCancelacion = new SinCancelacion();
+		//Inicializar observer singleton....:
+		this.observer = Observer.getInstance();
 	}
 	
 	//Getters:
@@ -205,6 +209,14 @@ public class Inmueble {
 		return (int) this.reservas.stream().filter(r -> r.estaFinalizada()).count();
 	};
 	
+	//Bajar precio default de inmueble:
+	public void bajarPrecio(double newPrecio) {
+		if (newPrecio < this.precioDefault) {
+			this.precioDefault = newPrecio;
+			this.observer.notifyBajaPrecio(this);
+		}
+	};
+	
 	//Disponibilidad del inmueble en ciertas fechas dadas, dada por no tener reservas aceptadas en esas fechas:
 	public boolean estaDisponible(LocalDate checkIn, LocalDate checkOut) {
 		
@@ -220,6 +232,7 @@ public class Inmueble {
 		if (this.estaDisponible(checkIn, checkOut)) {
 			this.agregarReserva(newReserva);
 			inquilino.agregarReserva(newReserva);
+			this.observer.notifyReserva(this);
 		} else {
 			this.agregarReservaCondicional(newReserva);
 		}

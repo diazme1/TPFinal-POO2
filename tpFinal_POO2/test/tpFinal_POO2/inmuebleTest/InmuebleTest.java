@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observer;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,7 @@ class InmuebleTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-
+		
 		this.propietarioMock = mock(Propietario.class);
 		this.inmueble = new Inmueble(
 				propietarioMock,			//Dueño
@@ -119,6 +120,19 @@ class InmuebleTest {
 		
 		assertTrue(this.inmueble.getFormasDePagoAdmitidas().contains(efectivo));
 		
+	}
+	
+	@Test
+	void testBajarPrecioInmueble() {
+		//No hay periodos extraordinarios, se usa fecha random para verificar precio:
+		LocalDate fechaTest = LocalDate.of(2024, 1, 5);
+		
+		//Assert de precio inicial 100.00:
+		assertEquals(100.00, this.inmueble.getValorDeFecha(fechaTest));
+		
+		this.inmueble.bajarPrecio(70.00);
+		
+		assertEquals(70.00, this.inmueble.getValorDeFecha(fechaTest));
 	}
 	
 	@Test
