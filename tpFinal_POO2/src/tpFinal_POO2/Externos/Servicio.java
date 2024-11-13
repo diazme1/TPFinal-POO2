@@ -1,4 +1,4 @@
-package tpFinal_POO2.Inmueble;
+package tpFinal_POO2.Externos;
 
 public class Servicio {
 

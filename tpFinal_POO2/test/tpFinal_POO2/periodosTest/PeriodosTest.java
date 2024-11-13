@@ -19,23 +19,22 @@ class PeriodosTest {
 		LocalDate fechaFin = LocalDate.of(2024, 1, 15);
 		this.periodo = new Periodo(fechaInicio, fechaFin, 50.00);
 	}
-
+	
 	@Test
-	void testMontoTotalPeriodo() {
-		
-		LocalDate fechaInicio = LocalDate.of(2024, 1, 8);
-		LocalDate fechaFin = LocalDate.of(2024, 1, 17);
-		
-		assertEquals(900.00, this.periodo.montoExtraordinarioPara(100.00, fechaInicio, fechaFin));
+	void testGetIncremento() {
+		assertEquals(50.00, periodo.getIncremento());
 	}
 	
 	@Test
-	void testMontoParcialPeriodo() {
-		
-		LocalDate fechaInicio = LocalDate.of(2024, 1, 11);
-		LocalDate fechaFin = LocalDate.of(2024, 1, 14);
-		
-		assertEquals(600.00, this.periodo.montoExtraordinarioPara(100.00, fechaInicio, fechaFin));
+	void testFechaIncluidaEnPeriodo() {
+		LocalDate fecha = LocalDate.of(2024, 1, 12);
+		assertTrue(periodo.incluidoEnPeriodo(fecha));
+	}
+	
+	@Test
+	void testFechaNoEstaIncluidaEnPeriodo() {
+		LocalDate fecha = LocalDate.of(2024, 1, 5);
+		assertFalse(periodo.incluidoEnPeriodo(fecha));
 	}
 
 }

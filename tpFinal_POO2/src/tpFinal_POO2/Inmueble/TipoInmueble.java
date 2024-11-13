@@ -9,4 +9,8 @@ public class TipoInmueble {
 		this.tipoInmueble = tipo;
 	}
 	
+	public String getTipoInmueble() {
+		return this.tipoInmueble;
+	}
+	
 }

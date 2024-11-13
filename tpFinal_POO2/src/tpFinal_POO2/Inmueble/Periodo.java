@@ -15,21 +15,12 @@ public class Periodo {
 		this.incremento = precio;
 	};
 	
-	public double montoExtraordinarioPara(double precioBase, LocalDate fechaEntrada, LocalDate fechaSalida) {
-		
-		double precioAcumulado = 0.00;
-        LocalDate fechaActual = fechaEntrada;
-        
-        while(!fechaActual.isAfter(this.fechaFin) && !fechaActual.isAfter(fechaSalida)) {
-        	
-        	if (fechaActual.isAfter(this.fechaIni) || fechaActual.isEqual(this.fechaIni)) {
-            	precioAcumulado += (precioBase + this.incremento);
-                fechaActual = fechaActual.plusDays(1);
-        	} else {
-        		fechaActual = fechaActual.plusDays(1);
-        	}
-        }
-        return precioAcumulado;
+	public double getIncremento() {
+		return this.incremento;
+	}
+	
+	public boolean incluidoEnPeriodo(LocalDate fecha) {
+		return (fecha.isAfter(this.fechaIni) || fecha.isEqual(this.fechaIni)) && (fecha.isBefore(this.fechaFin) || fecha.isEqual(this.fechaFin));
 	}
 		
 }
