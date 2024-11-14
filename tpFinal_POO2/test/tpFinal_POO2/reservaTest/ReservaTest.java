@@ -46,6 +46,16 @@ class ReservaTest {
 		this.reserva= new Reserva(inmueble1,formaPago,checkIn,checkOut,inqMock);
 		this.reserva.setMailSender(imailMock);
 	}
+	
+	@Test
+	void seInicializaUnaReservaConLosAtributosDefinidos() {
+		
+		assertEquals(FormaDePago.EFECTIVO, this.reserva.getFormaDePago());
+		assertEquals(LocalDate.of(2022, 1, 10), this.reserva.getCheckIn());
+		assertEquals(LocalDate.of(2022, 1, 13), this.reserva.getCheckOut());
+		assertEquals("BuenosAires", this.reserva.getCiudad());
+		
+	}
 
 	@Test
 	void seApruebaUnaReserva() {
@@ -93,6 +103,21 @@ class ReservaTest {
 		// si se puede rankear es porque esta finalizada
 		assertTrue(this.reserva.sePuedeValorar());
 		assertTrue(reserva.estaFinalizada());
+	}
+	
+	@Test
+	void seChequeaLaRealizacionDelCheckOutUnDiaQueNoCorresponde() {
+		reserva.aprobarReserva();
+		this.reserva.realizarCheckOut(LocalDate.of(2022, 1, 15));
+		// si se puede rankear es porque esta finalizada
+		assertFalse(reserva.estaFinalizada());
+	}
+	
+	@Test
+	void seChequeaLaRealizacionDelCheckOutUnaReservaNoAprobada() {
+		this.reserva.realizarCheckOut(LocalDate.of(2022, 1, 13));
+		// si se puede rankear es porque esta finalizada
+		assertFalse(reserva.estaFinalizada());
 	}
 	
 	@Test

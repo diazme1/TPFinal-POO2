@@ -60,7 +60,7 @@ public class Reserva{
 		return this.inmueble;
 	}
 	
-	public FormaDePago getFormaDePago() {
+	public FormaDePago getFormaDePago()  {
 		return this.formaDePago;
 	}
 	
@@ -71,10 +71,10 @@ public class Reserva{
 	
 	public void cancelarReserva(LocalDate diaHecho) {
 		this.estado.cancelarReserva(this,diaHecho);
-	}	
+	}
 	
 	public void realizarCheckOut(LocalDate diaHecho) {
-		if(diaHecho.equals(this.checkOut)) {
+		if(diaHecho.equals(this.checkOut) && this.estaAprobada()) {
 			this.estado.siguienteEstado(this);
 		}
 	}
