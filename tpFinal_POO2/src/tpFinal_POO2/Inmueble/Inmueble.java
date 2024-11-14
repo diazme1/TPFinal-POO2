@@ -17,7 +17,6 @@ import tpFinal_POO2.Valoracion.Valoracion;
 import tpFinal_POO2.PoliticasCancelacion.PoliticaCancelacion;
 import tpFinal_POO2.PoliticasCancelacion.SinCancelacion;
 
-//Clase abstracta para imports, ELIMINAR cuando se haya desarrollado el inmueble.
 public class Inmueble {
 
 	private Propietario dueño;
@@ -41,7 +40,6 @@ public class Inmueble {
 
 	
 	public Inmueble(Propietario propietario, String tipo, double metros, String pais, String ciudad, String dir, List<String> servicios, int cantHuespedes, LocalTime checkIn, LocalTime checkOut, double precio) {
-		super();
 		this.dueño = propietario;
 		this.tipoInmueble = tipo;
 		this.metrosCuadrados = metros;
@@ -71,6 +69,26 @@ public class Inmueble {
 	//Getters:
 	public Propietario getDueño() {
 		return this.dueño;
+	};
+	
+	public double getMetrosCuadrados() {
+		return this.metrosCuadrados;
+	};
+	
+	public LocalTime getCheckIn() {
+		return this.checkIn;
+	};
+	
+	public String getPais() {
+		return this.pais; 
+	};
+	
+	public String getDireccion() {
+		return this.direccion; 
+	};
+	
+	public LocalTime getCheckOut() {
+		return this.checkOut;
 	};
 	
 	public List<String> getServicios(){
@@ -135,6 +153,7 @@ public class Inmueble {
 		return valor;
 	};
 	
+	// 
 	public double promedioPuntajeTotal() {
 		
 		OptionalDouble promedio = this.getValoracionesRecibidas().stream().mapToInt(v -> v.getPuntaje()).average();
@@ -151,7 +170,6 @@ public class Inmueble {
 		OptionalDouble promedio = this.getValoracionesRecibidas().stream().
 																	filter(v -> v.getCategoria().equals(categoria)).
 																	mapToInt(v -> v.getPuntaje()).average();
-		
 		if (promedio.isPresent()) {
 			return promedio.getAsDouble();
 		} else {

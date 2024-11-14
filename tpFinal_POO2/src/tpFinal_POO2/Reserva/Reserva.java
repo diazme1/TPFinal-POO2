@@ -5,13 +5,12 @@ import java.time.LocalDate;
 import tpFinal_POO2.Inmueble.Inmueble;
 import tpFinal_POO2.Usuario.Inquilino;
 import tpFinal_POO2.Usuario.Propietario;
-import tpFinal_POO2.Observer.Observer;
 import tpFinal_POO2.Valoracion.Valoracion;
 
 public class Reserva{
 	
 	private Inmueble inmueble;
-	FormaDePago formaDePago;
+	private FormaDePago formaDePago;
 	private LocalDate checkIn;
 	private LocalDate checkOut;
 	private Inquilino inquilino;
@@ -27,10 +26,12 @@ public class Reserva{
 		this.estado= new EstadoSolicitada();
 	}
 	
+	// CHEQUEA SI LAS FECHAS DE LA NUEVA RESERVA SOLICITADA EN INMUEBLE SE SOLAPAN CON ESTA
 	public boolean haySolapamiento(LocalDate checkIn, LocalDate checkOut) {
         return checkIn.isBefore(this.getCheckOut()) && checkOut.isAfter(this.getCheckIn());
     }
 	
+	// GETTERS
 	public LocalDate getCheckIn() {
 		return this.checkIn;
 	}
@@ -38,39 +39,17 @@ public class Reserva{
 	public LocalDate getCheckOut() {
 		return this.checkOut;
 	}
-
-	public boolean estaFinalizada() {
-		return this.estado.esFinalizada();
-	}
 	
 	public String getCiudad() {
 		return this.inmueble.getCiudad();
 	}
 	
-	public void aprobarReserva() {
-			this.estado.aprobarReserva(this);
-	}
-	
-	public void realizarCheckOut(LocalDate diaHecho) {
-		if(diaHecho.equals(this.checkOut)) {
-			this.estado.siguienteEstado(this);
-		}
+	public boolean estaFinalizada() {
+		return this.estado.esFinalizada();
 	}
 	
 	public Inquilino getInfoPosibleInquilino() {
 		return this.inquilino;
-	}
-	
-	public double getMontoTotal() {
-		return this.inmueble.getMontoTotalPara(checkIn,checkOut);
-	}
-	
-	public void cancelarReserva(LocalDate diaHecho) {
-		this.estado.cancelarReserva(this,diaHecho);
-	}
-	
-	public Propietario getPropietario() {
-		return this.inmueble.getDueño();
 	}
 	
 	public Inquilino getInquilino() {
@@ -81,6 +60,25 @@ public class Reserva{
 		return this.inmueble;
 	}
 	
+	public FormaDePago getFormaDePago() {
+		return this.formaDePago;
+	}
+	
+	// FUNCIONES MANEJADAS POR EL ESTADO DE LA RESERVA - SU EFECTIVIDAD ES RELATIVA DEL ESTADO EN QUE SE ENCUENTRA
+	public void aprobarReserva() {
+			this.estado.aprobarReserva(this);
+	}
+	
+	public void cancelarReserva(LocalDate diaHecho) {
+		this.estado.cancelarReserva(this,diaHecho);
+	}	
+	
+	public void realizarCheckOut(LocalDate diaHecho) {
+		if(diaHecho.equals(this.checkOut)) {
+			this.estado.siguienteEstado(this);
+		}
+	}
+	
 	public void rankearInmueble(Valoracion val) {
 		this.estado.rankearInmueble(this,val);
 	}
@@ -88,15 +86,10 @@ public class Reserva{
 	public void rankearInquilino(Valoracion val) {
 		this.estado.rankearInquilino(this,val);
 	}
-	
 
 	public void rankearPropietario(Valoracion val) {
 		this.estado.rankearPropietario(this,val);
-	}
-	
-	public void cambiaEstadoA(EstadoReserva nuevoEstado) {
-		this.estado=nuevoEstado;
-	}
+	}	
 	
 	public boolean estaAprobada(){
 		return this.estado.esAprobada(this);
@@ -108,6 +101,20 @@ public class Reserva{
 
 	public boolean sePuedeValorar() {
 		return this.estado.puedeValorar(this);
+	}
+	
+	// FUNCIONES MANEJADAS POR EL INMUEBLE
+	public double getMontoTotal() {
+		return this.inmueble.getMontoTotalPara(checkIn,checkOut);
+	}
+	
+	public Propietario getPropietario() {
+		return this.inmueble.getDueño();
+	}
+
+	// FUNCIONES SOLICITADAS POR LOS ESTADOS - IMPLEMENTACION SOLICITADA DE PATRON STATE
+	public void cambiaEstadoA(EstadoReserva nuevoEstado) {
+		this.estado=nuevoEstado;
 	}
 
 	public void enviarMailConfirmacion() {

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import tpFinal_POO2.Filtros.FiltroCompuesto;
 import tpFinal_POO2.Inmueble.Inmueble;
 import tpFinal_POO2.Usuario.Inquilino;
 import tpFinal_POO2.Usuario.Propietario;
@@ -33,6 +34,7 @@ public class SitioWeb {
 		usuarios.add(u);
 	}
 	
+	// CARGA DE CATEGORIAS EN EL SITIO DE DIFERENTES ENTIDADES
 	public void darDeAltaCategoriaInmueble(String c) {
 		this.categoriasInmueble.add(c);
 	}
@@ -45,6 +47,15 @@ public class SitioWeb {
 		this.categoriasPropietario.add(c);
 	}
 	
+	public void darAltaTipoInmueble(String c) {
+		this.tipoDeInmuebles.add(c);
+	}
+
+	public void darAltaServicios(String s) {
+		this.servicios.add(s);
+	}
+	
+	// CHEQUEO DE VALIDEZ DE POSIBLES RANKEOS DE ENTIDADES (PROVIENEN DE USUARIOS - INQ Y PROP)
 	public boolean esValidaCategoriaInmueble(String cim) {
 		return this.categoriasInmueble.contains(cim);
 	}
@@ -56,7 +67,8 @@ public class SitioWeb {
 	public boolean esValidaCategoriaPropietario(String cp) {
 		return this.categoriasPropietario.contains(cp);
 	}
-
+	
+	// CHEQUEOS DE VALIDEZ SOLICITADOS POR USUARIO PARA POSTERIOR CARGA DE INMUEBLES EN SITIO WEB
 	public boolean esValidoInmueble(Inmueble i) {
 		return sonValidosLosServicios(i.getServicios()) && esValidoTipoDeInmueble(i.getTipoInmueble());
 	}
@@ -70,19 +82,13 @@ public class SitioWeb {
 		return serviciosInm.stream()
 						   .allMatch(servicios::contains);
 	}
-
+	
+	// PEDIDOS DE FILTRACION DE INMUEBLES - ARRANCA DE ACA POR TEMAS DE INTERFAZ GRAFICA.
 	public List<Inmueble> filtrarPropiedadesPor(FiltroCompuesto filtro){
 		return filtro.filtrar(this.getInmuebles());
 	}
-
-	public void darAltaTipoInmueble(String c) {
-		tipoDeInmuebles.add(c);
-	}
-
-	public void darAltaServicios(String s) {
-		servicios.add(s);
-	}
-
+	
+	// FUNCIONES EVALUADAS EN FORMA DE ADMINISTRADOR
 	public List<Inquilino> getTopTenInquilinos(){
 		return this.getInquilinos()
 	               .stream()
@@ -119,7 +125,9 @@ public class SitioWeb {
 				   .mapToInt(p->p.inmueblesAlquilados().size())
 				   .sum();  
 	}
-
+	
+	
+	// SETTERS
 	public Set<Usuario> getUsuarios() {
 		return this.usuarios;
 	}

@@ -58,6 +58,12 @@ class InmuebleTest {
 		assertTrue(this.inmueble.getFormasDePagoAdmitidas().isEmpty());
 		assertEquals("Casa", this.inmueble.getTipoInmueble());
 		assertEquals(100.00, this.inmueble.getPrecio());
+		assertEquals("CABA", this.inmueble.getCiudad());
+		assertEquals(LocalTime.of(15, 0), this.inmueble.getCheckIn());
+		assertEquals(LocalTime.of(10, 0), this.inmueble.getCheckOut());
+		assertEquals("Argentina", this.inmueble.getPais());
+		assertEquals(50.00, this.inmueble.getMetrosCuadrados());
+		assertEquals("Av. Libertador 2000", this.inmueble.getDireccion());
 
 	}
 	

@@ -1,7 +1,5 @@
 package tpFinal_POO2.Usuario;
 
-
-
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -33,24 +31,22 @@ public class Usuario implements Inquilino,Propietario{
 		this.fechaIngreso = hoy;
 		this.sitio = sitio;
 	}
-
+	
+	// GETTERS
+	@Override
 	public String getNombre() {
 		return nombre;
 	}
-	
+	@Override
 	public String getEmail() {
 		return email;
 	}
-	
-
+	@Override
 	public String getTelefono() {
 		return telefono;
 	}
 	
-	private boolean esValidaCategoriaPropietario(String categoria){
-		return this.sitio.esValidaCategoriaPropietario(categoria);
-	}
-
+	// COMPORTAMIENTO DE PROPIETARIOS
 	@Override
 	public Double promedioValoracionPropietario() {
 		OptionalDouble promedioProp = this.valoraciones.stream().filter(v->this.esValidaCategoriaPropietario(v.getCategoria())).mapToInt(v->v.getPuntaje()).average();
@@ -66,9 +62,31 @@ public class Usuario implements Inquilino,Propietario{
 		return this.valoraciones.stream().filter(v->this.esValidaCategoriaPropietario(v.getCategoria())).toList();
 	}
 	
+	@Override
+    public void agregarValoracionPropietario(Valoracion val) {
+        if(this.esValidaCategoriaPropietario(val.getCategoria())) {
+            this.valoraciones.add(val);
+        }
+	}
+	
+	@Override
+	public List<Inmueble> inmueblesAlquilados() {
+		return this.inmuebles.stream().filter(inm->inm.vecesAlquilado()>0).toList();
+	}
+
+	@Override
+	public int vecesAlquilado() {
+		return this.inmuebles.stream().mapToInt(inm->inm.vecesAlquilado()).sum();
+	}
+	
+	// CHEQUEA LA VALIDEZ DE LA CATEGORIA (DEPENDIENDO SI ES INQUILINO O PROPIETARIO)
 	private boolean esValidaCategoriaInquilino(String categoria){
 		return this.sitio.esValidaCategoriaInquilino(categoria);
 	}
+	
+	private boolean esValidaCategoriaPropietario(String categoria){
+		return this.sitio.esValidaCategoriaPropietario(categoria);
+	}	
 
 	@Override
 	public double promedioValoracionInquilino() {
@@ -80,22 +98,26 @@ public class Usuario implements Inquilino,Propietario{
 		}
 	}
 	
-
 	@Override
 	public List<Valoracion> getValoracionesInquilino() {
 		return this.valoraciones.stream().filter(v->this.esValidaCategoriaInquilino(v.getCategoria())).toList();
 	}
-	public void agregarValoracion(Valoracion val) {
-		if(this.esValidaCategoriaInquilino(val.getCategoria()) || this.esValidaCategoriaPropietario(val.getCategoria())) {
-			this.valoraciones.add(val);
-		}
+	
+	// AGREGA VALORACIONES DEPENDIENDO SU VALIDEZ
+	@Override
+    public void agregarValoracionInquilino(Valoracion val) {
+        if(this.esValidaCategoriaInquilino(val.getCategoria())) {
+            this.valoraciones.add(val);
+        }
 	}
 	
 	public void darDeAltaInmueble(Inmueble inmu) {
 		if (sitio.esValidoInmueble(inmu)) {this.inmuebles.add(inmu);}
 	}
 	
+	@Override
 	public List<Reserva> getReservas() {
+		// SOLO DE INQUILINOS, LOS PROPIETARIOS BUSCAN SUS RESERVAS APARTIR DE SUS INMUEBLES
 		return this.reservas;
 	}
 	
@@ -103,19 +125,11 @@ public class Usuario implements Inquilino,Propietario{
 		//se asume que la fecha en el parametro es la fecha actual otorgada por la interfaz web
 		return this.reservas.stream().filter(reserva -> reserva.getCheckIn().isAfter(hoy)).toList();
 	}
+	
+	@Override
 	public int getAntiguedadUsuario(LocalDate hoy) {
 		//asumiendo que la fecha en el parametro es la fecha actual otorgada por la interdaz web
 		return (int) ChronoUnit.DAYS.between(this.fechaIngreso, hoy);
-	}
-
-	@Override
-	public List<Inmueble> inmueblesAlquilados() {
-		return this.inmuebles.stream().filter(inm->inm.vecesAlquilado()>0).toList();
-	}
-
-	@Override
-	public int vecesAlquilado() {
-		return this.inmuebles.stream().mapToInt(inm->inm.vecesAlquilado()).sum();
 	}
 
 	@Override
@@ -147,6 +161,7 @@ public class Usuario implements Inquilino,Propietario{
 	public void abonarMonto(Double monto) {
 	}
 	
+	@Override
 	public double promedioValoracionCategoria(String categoria) {
 	    OptionalDouble promedio = this.valoraciones.stream().filter(v->v.getCategoria() == categoria).mapToInt(v->v.getPuntaje()).average();
 		if (promedio.isPresent()) {

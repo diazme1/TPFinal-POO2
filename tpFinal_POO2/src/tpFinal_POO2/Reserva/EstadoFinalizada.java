@@ -8,12 +8,12 @@ public class EstadoFinalizada extends EstadoReserva {
 	
 	@Override
 	public void rankearPropietario(Reserva r,Valoracion val) {
-		r.getPropietario().agregarValoracion(val);
+		r.getPropietario().agregarValoracionPropietario(val);
 	};
 
 	@Override
 	public void rankearInquilino(Reserva r,Valoracion val) {
-		r.getInquilino().agregarValoracion(val);
+		r.getInquilino().agregarValoracionInquilino(val);
 	};
 	
 	@Override

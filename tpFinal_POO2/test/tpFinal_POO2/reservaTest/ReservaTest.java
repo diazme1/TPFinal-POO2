@@ -108,7 +108,7 @@ class ReservaTest {
 		reserva.aprobarReserva();
 		this.reserva.realizarCheckOut(LocalDate.of(2022, 1, 13));
 		this.reserva.rankearPropietario(valoracionMock);
-		verify(propMock,times(1)).agregarValoracion(valoracionMock);
+		verify(propMock,times(1)).agregarValoracionPropietario(valoracionMock);
 	}
 	
 	@Test
@@ -116,7 +116,7 @@ class ReservaTest {
 		reserva.aprobarReserva();
 		this.reserva.realizarCheckOut(LocalDate.of(2022, 1, 13));
 		this.reserva.rankearInquilino(valoracionMock);
-		verify(inqMock,times(1)).agregarValoracion(valoracionMock);
+		verify(inqMock,times(1)).agregarValoracionInquilino(valoracionMock);
 	}
 	
 	@Test

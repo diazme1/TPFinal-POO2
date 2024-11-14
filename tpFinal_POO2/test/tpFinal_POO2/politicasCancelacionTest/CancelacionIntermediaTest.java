@@ -40,7 +40,6 @@ class CancelacionIntermediaTest {
 		
 		//Agregado de assert luego de verify
 		assertTrue(true, "La cancelación fue con más de 20 días de anticipación.");
-		
 	}
 	
 	@Test
