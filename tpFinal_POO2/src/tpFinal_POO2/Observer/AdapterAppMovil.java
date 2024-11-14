@@ -1,4 +1,4 @@
-package tpFinal_POO2.observer;
+package tpFinal_POO2.Observer;
 
 public class AdapterAppMovil implements ListenerCancelacion{
 	private PopUpWindow adaptee;

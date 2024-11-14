@@ -1,4 +1,4 @@
-package tpFinal_POO2.usuario;
+package tpFinal_POO2.usuarioTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

@@ -1,4 +1,4 @@
-package tpFinal_POO2.observer;
+package tpFinal_POO2.Observer;
 
 import java.util.HashMap;
 import java.util.HashSet;

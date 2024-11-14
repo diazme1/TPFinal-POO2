@@ -1,4 +1,4 @@
-package tpFinal_POO2.observer;
+package tpFinal_POO2.observerTest;
 
 import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.Test;

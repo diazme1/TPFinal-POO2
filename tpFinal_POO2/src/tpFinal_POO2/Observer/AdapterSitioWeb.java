@@ -1,4 +1,4 @@
-package tpFinal_POO2.observer;
+package tpFinal_POO2.Observer;
 
 public class AdapterSitioWeb implements ListenerBajaPrecio{
 	private HomePagePublisher adaptee;
