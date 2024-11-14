@@ -27,4 +27,3 @@ public abstract class EstadoReserva {
 	public boolean esFinalizada() {return false;}
 	
 }
-

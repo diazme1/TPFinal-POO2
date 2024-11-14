@@ -6,7 +6,7 @@ import tpFinal_POO2.Inmueble.Inmueble;
 import tpFinal_POO2.Usuario.Usuario;
 import tpFinal_POO2.Valoracion.Valoracion;
 
-public class Reserva {
+public class Reserva{
 	
 	private Inmueble inmueble;
 	FormaDePago formaDePago;
@@ -14,6 +14,7 @@ public class Reserva {
 	private LocalDate checkOut;
 	private Usuario inquilino;
 	private EstadoReserva estado;
+	private ObserverManager observer;
 	private MailSender mailSender;
 	
 	public Reserva(Inmueble inmueble, FormaDePago formaDePago, LocalDate checkIn, LocalDate checkOut, Usuario inquilino) {
@@ -22,6 +23,7 @@ public class Reserva {
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
 		this.inquilino=inquilino;
+		this.observer=new ObserverManager();
 		this.estado= new EstadoSolicitada();
 	}
 	
@@ -118,5 +120,7 @@ public class Reserva {
 
 	public void enviarMailCancelacion() {
 		mailSender.sendEmail(this.getPropietario().getEmail(), "Reserva Cancelada!", "Se cancelo la reserva ;(");
+		this.observer.notifyCancelacion(this.inmueble);
 	}
+
 }

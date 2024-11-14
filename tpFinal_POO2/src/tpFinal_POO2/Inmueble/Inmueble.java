@@ -52,12 +52,12 @@ public class Inmueble {
 		return valFinal;
 	}
 
-	public TipoDeInmueble getTipoDeInmueble() {
+	public String getTipoDeInmueble() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public List<Servicio> getServicios() {
+	public List<String> getServicios() {
 		// TODO Auto-generated method stub
 		return null;
 	}
