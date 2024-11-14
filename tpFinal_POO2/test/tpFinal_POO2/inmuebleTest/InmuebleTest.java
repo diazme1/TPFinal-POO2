@@ -6,7 +6,6 @@ import static org.mockito.Mockito.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +18,6 @@ import tpFinal_POO2.Valoracion.Valoracion;
 import tpFinal_POO2.Inmueble.Inmueble;
 import tpFinal_POO2.Inmueble.Periodo;
 import tpFinal_POO2.PoliticasCancelacion.CancelacionIntermedia;
-import tpFinal_POO2.Observer.Observer;
 
 class InmuebleTest {
 	
@@ -59,6 +57,7 @@ class InmuebleTest {
 		assertEquals("CABA", this.inmueble.getCiudad());
 		assertTrue(this.inmueble.getFormasDePagoAdmitidas().isEmpty());
 		assertEquals("Casa", this.inmueble.getTipoInmueble());
+		assertEquals(100.00, this.inmueble.getPrecio());
 
 	}
 	

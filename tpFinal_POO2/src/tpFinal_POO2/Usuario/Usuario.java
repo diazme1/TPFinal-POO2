@@ -3,6 +3,7 @@ package tpFinal_POO2.Usuario;
 
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.OptionalDouble;
@@ -104,11 +105,7 @@ public class Usuario implements Inquilino,Propietario{
 	}
 	public int getAntiguedadUsuario(LocalDate hoy) {
 		//asumiendo que la fecha en el parametro es la fecha actual otorgada por la interdaz web
-		int acum = 0;
-		while (hoy.isAfter(fechaIngreso)) {
-			acum +=1;
-		}
-		return acum;
+		return (int) ChronoUnit.DAYS.between(this.fechaIngreso, hoy);
 	}
 
 	@Override

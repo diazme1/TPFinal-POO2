@@ -20,7 +20,7 @@ import java.util.Set;
 class UsuarioTest {
 	private LocalDate hoy = LocalDate.of(2024, 10, 10);
 	private SitioWeb sitio = mock(SitioWeb.class); 
-	private Usuario user =new Usuario("Daniel","correo","tlfn", hoy, sitio); 
+	private Usuario user = new Usuario("Daniel","correo","tlfn", hoy, sitio); 
 	
 	@Test
 	void gettersTest(){
@@ -107,5 +107,49 @@ class UsuarioTest {
 		assertFalse(user.validarCategoriaInmueble("invalida"));
 	}
 	
+	@Test
+	void getReservasFuturasTest() {
+		LocalDate hoy = LocalDate.of(2024, 1, 1);
+		
+		//Mocks reservas:
+		Reserva reserva1 = mock(Reserva.class);
+		when(reserva1.getCheckIn()).thenReturn(LocalDate.of(2024, 1, 20));
+		Reserva reserva2 = mock(Reserva.class);
+		when(reserva2.getCheckIn()).thenReturn(LocalDate.of(2024, 1, 27));
+		
+		//Agrego reservas a usuario:
+		this.user.agregarReserva(reserva1);
+		this.user.agregarReserva(reserva2);
+		
+		//Asserts:
+		assertTrue(this.user.reservasFuturas(hoy).contains(reserva1));
+		assertTrue(this.user.reservasFuturas(hoy).contains(reserva2));
+		
+		assertEquals(2, this.user.reservasFuturas(hoy).size());
+	}
+	
+	@Test
+	void getAntiguedadUsuarioTest() {
+		//El usuario se habría registrado en 2024.10.10:
+		LocalDate unAnioDespues = LocalDate.of(2025, 10, 10);
+		
+		assertEquals(365, this.user.getAntiguedadUsuario(unAnioDespues));
+	}
+	
+	@Test
+	void getCantidadReservasFinalizadasInquilino() {
+		//Mocks reservas:
+		Reserva reserva1 = mock(Reserva.class);
+		when(reserva1.estaFinalizada()).thenReturn(true);
+		Reserva reserva2 = mock(Reserva.class);
+		when(reserva2.estaFinalizada()).thenReturn(true);
+		
+		//Agrego reservas a usuario:
+		this.user.agregarReserva(reserva1);
+		this.user.agregarReserva(reserva2);
+		
+		//Asserts:
+		assertEquals(2, this.user.cantReservasFinalizadasInquilino());
+	}
 
 }
