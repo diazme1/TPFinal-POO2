@@ -3,7 +3,14 @@ package tpFinal_POO2.observerTest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+import tpFinal_POO2.Observer.Observer;
+
 import org.junit.jupiter.api.Test;
+
+import tpFinal_POO2.Inmueble.Inmueble;
+import tpFinal_POO2.Observer.ListenerBajaPrecio;
+import tpFinal_POO2.Observer.ListenerCancelacion;
+import tpFinal_POO2.Observer.ListenerReserva;
 
 class ObserverTest {
 	private Observer observer = Observer.getInstance();

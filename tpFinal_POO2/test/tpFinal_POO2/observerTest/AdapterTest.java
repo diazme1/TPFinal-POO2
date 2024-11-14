@@ -3,6 +3,12 @@ package tpFinal_POO2.observerTest;
 import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.Test;
 
+import tpFinal_POO2.Inmueble.Inmueble;
+import tpFinal_POO2.Observer.AdapterAppMovil;
+import tpFinal_POO2.Observer.AdapterSitioWeb;
+import tpFinal_POO2.Observer.HomePagePublisher;
+import tpFinal_POO2.Observer.PopUpWindow;
+
 class AdapterTest {
 	private PopUpWindow mockPopUp = mock(PopUpWindow.class);
 	private HomePagePublisher mockSite = mock(HomePagePublisher.class);

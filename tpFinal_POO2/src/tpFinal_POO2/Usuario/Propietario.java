@@ -1,16 +1,18 @@
 package tpFinal_POO2.Usuario;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import tpFinal_POO2.observer.Inmueble;
+import tpFinal_POO2.Inmueble.Inmueble;
+import tpFinal_POO2.Valoracion.Valoracion;
 
 public interface Propietario {
 	public Double promedioValoracionPropietario();
-	public ArrayList<Valoracion> getValoracionesPropietario();
+	public List<Valoracion> getValoracionesPropietario();
 	public void darDeAltaInmueble(Inmueble inmu);
-	public ArrayList<Inmueble> inmueblesAlquilados();
+	public List<Inmueble> inmueblesAlquilados();
 	public int vecesAlquilado();
-	public ArrayList<Reserva> reservasDeInmuebles();
-	public ArrayList<Inmueble> getInmuebles();
+	public List<Reserva> reservasDeInmuebles();
+	public List<Inmueble> getInmuebles();
 	public boolean validarCategoriaInmueble(String categoria);
 }

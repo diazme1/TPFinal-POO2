@@ -12,12 +12,11 @@ import java.util.Observer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import tpFinal_POO2.Externos.FormaDePago;
-import tpFinal_POO2.Externos.Inquilino;
-import tpFinal_POO2.Externos.Propietario;
-import tpFinal_POO2.Externos.Reserva;
-import tpFinal_POO2.Externos.Servicio;
-import tpFinal_POO2.Externos.Valoracion;
+import tpFinal_POO2.FormaDePago;
+import tpFinal_POO2.Usuario.Inquilino;
+import tpFinal_POO2.Usuario.Propietario;
+import tpFinal_POO2.Reserva;
+import tpFinal_POO2.Valoracion.Valoracion;
 import tpFinal_POO2.Inmueble.Inmueble;
 import tpFinal_POO2.Inmueble.Periodo;
 import tpFinal_POO2.PoliticasCancelacion.CancelacionIntermedia;

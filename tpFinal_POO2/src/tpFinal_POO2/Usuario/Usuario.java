@@ -2,25 +2,28 @@ package tpFinal_POO2.Usuario;
 
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 
-import tpFinal_POO2.observer.Inmueble;
+import tpFinal_POO2.Inmueble.Inmueble;
+import tpFinal_POO2.Valoracion.Valoracion;
+import tpFinal_POO2.SitioWeb.SitioWeb;
 
 public class Usuario implements Inquilino,Propietario{
 	private String nombre;
 	private String email;
 	private String telefono;
-	private ArrayList<Inmueble> inmuebles = new ArrayList<Inmueble>();
-	private ArrayList<Valoracion> valoraciones = new ArrayList<Valoracion>();
-	private Date fechaIngreso;
-	private ArrayList<Reserva> reservas = new ArrayList<Reserva>();
+	private List<Inmueble> inmuebles = new ArrayList<Inmueble>();
+	private List<Valoracion> valoraciones = new ArrayList<Valoracion>();
+	private LocalDate fechaIngreso;
+	private List<Reserva> reservas = new ArrayList<Reserva>();
 	private SitioWeb sitio;
 	
-	public Usuario(String newNombre, String newEmail, String tlfn, Date hoy,SitioWeb sitio) {
+	public Usuario(String newNombre, String newEmail, String tlfn, LocalDate hoy, SitioWeb sitio) {
 		//asumo que la fecha en el parametro es el dia de hoy entregado por la interfaz grafica
 		this.nombre = newNombre;
 		this.email = newEmail;
@@ -48,7 +51,7 @@ public class Usuario implements Inquilino,Propietario{
 
 	@Override
 	public Double promedioValoracionPropietario() {
-		OptionalDouble promedioProp = this.valoraciones.stream().filter(v->this.esValidaCategoriaPropietario(v.getCategoria())).mapToInt(v->v.getVal()).average();
+		OptionalDouble promedioProp = this.valoraciones.stream().filter(v->this.esValidaCategoriaPropietario(v.getCategoria())).mapToInt(v->v.getPuntaje()).average();
 		if (promedioProp.isPresent()) {
 			return promedioProp.getAsDouble();
 		}else {
@@ -57,8 +60,8 @@ public class Usuario implements Inquilino,Propietario{
 	}
 
 	@Override
-	public ArrayList<Valoracion> getValoracionesPropietario() {
-		return this.valoraciones.stream().filter(v->this.esValidaCategoriaPropietario(v.getCategoria())).collect(Collectors.toCollection(ArrayList::new));
+	public List<Valoracion> getValoracionesPropietario() {
+		return this.valoraciones.stream().filter(v->this.esValidaCategoriaPropietario(v.getCategoria())).toList();
 	}
 	
 	private boolean esValidaCategoriaInquilino(String categoria){
@@ -67,7 +70,7 @@ public class Usuario implements Inquilino,Propietario{
 
 	@Override
 	public double promedioValoracionInquilino() {
-	    OptionalDouble promedioProp = this.valoraciones.stream().filter(v->this.esValidaCategoriaInquilino(v.getCategoria())).mapToInt(v->v.getVal()).average();
+	    OptionalDouble promedioProp = this.valoraciones.stream().filter(v->this.esValidaCategoriaInquilino(v.getCategoria())).mapToInt(v->v.getPuntaje()).average();
 		if (promedioProp.isPresent()) {
 			return promedioProp.getAsDouble();
 		}else {
@@ -77,8 +80,8 @@ public class Usuario implements Inquilino,Propietario{
 	
 
 	@Override
-	public ArrayList<Valoracion> getValoracionesInquilino() {
-		return this.valoraciones.stream().filter(v->this.esValidaCategoriaInquilino(v.getCategoria())).collect(Collectors.toCollection(ArrayList::new));
+	public List<Valoracion> getValoracionesInquilino() {
+		return this.valoraciones.stream().filter(v->this.esValidaCategoriaInquilino(v.getCategoria())).toList();
 	}
 	public void agregarValoracion(Valoracion val) {
 		if(this.esValidaCategoriaInquilino(val.getCategoria()) || this.esValidaCategoriaPropietario(val.getCategoria())) {
@@ -90,26 +93,26 @@ public class Usuario implements Inquilino,Propietario{
 		if (sitio.esValidoInmueble(inmu)) {this.inmuebles.add(inmu);}
 	}
 	
-	public ArrayList <Reserva> getReservas() {
+	public List<Reserva> getReservas() {
 		return this.reservas;
 	}
 	
-	public ArrayList <Reserva> reservasFuturas(Date hoy){
+	public List<Reserva> reservasFuturas(LocalDate hoy){
 		//se asume que la fecha en el parametro es la fecha actual otorgada por la interfaz web
-		return this.reservas.stream().filter(reserva -> reserva.fechaCheckIn().after(hoy)).collect(Collectors.toCollection(ArrayList::new));
+		return this.reservas.stream().filter(reserva -> reserva.fechaCheckIn().after(hoy)).toList();
 	}
-	public int getAntiguedadUsuario(Date hoy) {
+	public int getAntiguedadUsuario(LocalDate hoy) {
 		//asumiendo que la fecha en el parametro es la fecha actual otorgada por la interdaz web
 		int acum = 0;
-		while (hoy.after(fechaIngreso)) {
+		while (hoy.isAfter(fechaIngreso)) {
 			acum +=1;
 		}
 		return acum;
 	}
 
 	@Override
-	public ArrayList<Inmueble> inmueblesAlquilados() {
-		return inmuebles.stream().filter(inm->inm.vecesAlquilado()>0).collect(Collectors.toCollection(ArrayList::new));
+	public List<Inmueble> inmueblesAlquilados() {
+		return this.inmuebles.stream().filter(inm->inm.vecesAlquilado()>0).toList();
 	}
 
 	@Override
@@ -118,18 +121,18 @@ public class Usuario implements Inquilino,Propietario{
 	}
 
 	@Override
-	public ArrayList<Reserva> reservasEnCiudad(String ciudad) {
-		return this.reservas.stream().filter(res->res.getCiudad() == ciudad).collect(Collectors.toCollection(ArrayList::new));
+	public List<Reserva> reservasEnCiudad(String ciudad) {
+		return this.reservas.stream().filter(res->res.getCiudad() == ciudad).toList();
 	}
 
 	@Override
-	public HashSet<String> ciudadesReservadas() {
-		return this.reservas.stream().map(res->res.getCiudad()).collect(Collectors.toCollection(HashSet::new));
+	public Set<String> ciudadesReservadas() {
+		return this.reservas.stream().map(res->res.getCiudad()).toSet();
 	}
 
 	@Override
-	public ArrayList<Reserva> reservasDeInmuebles() {
-		return this.inmuebles.stream().flatMap(inm->inm.getReservas().stream()).collect(Collectors.toCollection(ArrayList::new));
+	public List<Reserva> reservasDeInmuebles() {
+		return this.inmuebles.stream().flatMap(inm->inm.getReservas().stream()).toList();
 	}
 
 	@Override
@@ -138,7 +141,7 @@ public class Usuario implements Inquilino,Propietario{
 	}
 
 	@Override
-	public ArrayList<Inmueble> getInmuebles() {
+	public List<Inmueble> getInmuebles() {
 		return this.inmuebles;
 	}
 
@@ -147,7 +150,7 @@ public class Usuario implements Inquilino,Propietario{
 	}
 	
 	public double promedioValoracionCategoria(String categoria) {
-	    OptionalDouble promedio = this.valoraciones.stream().filter(v->v.getCategoria() == categoria).mapToInt(v->v.getVal()).average();
+	    OptionalDouble promedio = this.valoraciones.stream().filter(v->v.getCategoria() == categoria).mapToInt(v->v.getPuntaje()).average();
 		if (promedio.isPresent()) {
 			return promedio.getAsDouble();
 		}else {

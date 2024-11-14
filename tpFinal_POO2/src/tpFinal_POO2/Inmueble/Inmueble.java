@@ -8,13 +8,12 @@ import java.util.List;
 import java.util.OptionalDouble;
 import java.util.Set;
 
-import tpFinal_POO2.Externos.FormaDePago;
-import tpFinal_POO2.Externos.Inquilino;
-import tpFinal_POO2.Externos.Observer;
-import tpFinal_POO2.Externos.Propietario;
-import tpFinal_POO2.Externos.Reserva;
-import tpFinal_POO2.Externos.Servicio;
-import tpFinal_POO2.Externos.Valoracion;
+import tpFinal_POO2.Reserva.FormaDePago;
+import tpFinal_POO2.Usuario.Inquilino;
+import tpFinal_POO2.Observer.Observer;
+import tpFinal_POO2.Usuario.Propietario;
+import tpFinal_POO2.Reserva.Reserva;
+import tpFinal_POO2.Valoracion.Valoracion;
 import tpFinal_POO2.PoliticasCancelacion.PoliticaCancelacion;
 import tpFinal_POO2.PoliticasCancelacion.SinCancelacion;
 
@@ -65,7 +64,7 @@ public class Inmueble {
 		this.formasDePagoAdmitidas = new HashSet<FormaDePago>();
 		//Por defecto no hay politica de cancelación consignada.
 		this.politicaCancelacion = new SinCancelacion();
-		//Inicializar observer singleton....:
+		//Inicializar observer:
 		this.observer = Observer.getInstance();
 	}
 	
@@ -254,6 +253,10 @@ public class Inmueble {
 		}
 		
 		this.politicaCancelacion.cancelarReserva(reservaCancelada, diaHecho);
+	}
+
+	public double getPrecio() {
+		return this.precioDefault;
 	}
 	
 	
