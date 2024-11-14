@@ -7,7 +7,13 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="/Users/emiliadiaz/eclipse-workspace/tpIntegrador/TPFinal-POO2/tpFinal_POO2/libs/mockito-core-5.14.2.jar">
+=======
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5">
+>>>>>>> Valentin
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
@@ -17,11 +23,23 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+<<<<<<< HEAD
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5">
+=======
+	<classpathentry kind="lib" path="/Users/emiliadiaz/eclipse-workspace/tpIntegrador/TPFinal-POO2/tpFinal_POO2/libs/mockito-core-5.14.2.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/Users/emiliadiaz/eclipse-workspace/tpIntegrador/TPFinal-POO2/tpFinal_POO2/libs/net.bytebuddy.byte-buddy-agent_1.15.7.jar">
+>>>>>>> Valentin
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+<<<<<<< HEAD
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+=======
+>>>>>>> Valentin
 	<classpathentry kind="output" path="bin"/>
 </classpath>
