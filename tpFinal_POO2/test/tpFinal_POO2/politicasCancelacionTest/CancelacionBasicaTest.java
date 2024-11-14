@@ -8,8 +8,8 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import tpFinal_POO2.Externos.Inquilino;
-import tpFinal_POO2.Externos.Reserva;
+import tpFinal_POO2.Usuario.Inquilino;
+import tpFinal_POO2.Reserva.Reserva;
 import tpFinal_POO2.Inmueble.Inmueble;
 import tpFinal_POO2.PoliticasCancelacion.CancelacionBasica;
 
@@ -38,7 +38,7 @@ class CancelacionBasicaTest {
 		this.cancelacionBasica.cancelarReserva(this.reservaMock, fechaCancelacion);
 		
 		//Más de 10 días antes es gratuito, no debería abonar:
-		verify(inquilinoMock, never()).abonar(0);
+		verify(inquilinoMock, never()).abonarMonto(0.00);
 		
 		//Agregado de assert luego de verify
 		assertTrue(true, "La cancelación fue con más de 10 días de anticipación.");
@@ -60,7 +60,7 @@ class CancelacionBasicaTest {
 		this.cancelacionBasica.cancelarReserva(this.reservaMock, fechaCancelacion);
 		
 		//Más de 10 días antes es gratuito, no debería abonar:
-		verify(inquilinoMock, times(1)).abonar(100.00);
+		verify(inquilinoMock, times(1)).abonarMonto(100.00);
 		
 		//Agregado de assert luego de verify
 		assertTrue(true, "La cancelación fue con menos de 10 días de anticipación, se notificó abono.");

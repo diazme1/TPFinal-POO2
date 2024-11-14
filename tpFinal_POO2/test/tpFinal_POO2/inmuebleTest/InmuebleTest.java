@@ -7,19 +7,19 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observer;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import tpFinal_POO2.FormaDePago;
+import tpFinal_POO2.Reserva.FormaDePago;
 import tpFinal_POO2.Usuario.Inquilino;
 import tpFinal_POO2.Usuario.Propietario;
-import tpFinal_POO2.Reserva;
+import tpFinal_POO2.Reserva.Reserva;
 import tpFinal_POO2.Valoracion.Valoracion;
 import tpFinal_POO2.Inmueble.Inmueble;
 import tpFinal_POO2.Inmueble.Periodo;
 import tpFinal_POO2.PoliticasCancelacion.CancelacionIntermedia;
+import tpFinal_POO2.Observer.Observer;
 
 class InmuebleTest {
 	
@@ -196,7 +196,7 @@ class InmuebleTest {
 		
 		//Se genera reserva para mockear reserva aceptada, en fechas dadas:
 		Reserva reservaMock = mock(Reserva.class);
-		when(reservaMock.estaAceptada()).thenReturn(true);
+		when(reservaMock.estaAprobada()).thenReturn(true);
 		when(reservaMock.haySolapamiento(checkIn_1, checkOut_1)).thenReturn(true);
 		//Se agrega la reserva mock:
 		this.inmueble.agregarReserva(reservaMock);
@@ -222,7 +222,7 @@ class InmuebleTest {
 		CancelacionIntermedia polCancelacionMock = mock(CancelacionIntermedia.class);
 		//Se genera una reserva mock aprobada para poder cancelarla:
 		Reserva reservaMock = mock(Reserva.class);
-		when(reservaMock.estaAceptada()).thenReturn(true);
+		when(reservaMock.estaAprobada()).thenReturn(true);
 		
 		this.inmueble.agregarReserva(reservaMock);
 		

@@ -58,7 +58,7 @@ public class SitioWeb {
 	}
 
 	public boolean esValidoInmueble(Inmueble i) {
-		return sonValidosLosServicios(i.getServicios()) && esValidoTipoDeInmueble(i.getTipoDeInmueble());
+		return sonValidosLosServicios(i.getServicios()) && esValidoTipoDeInmueble(i.getTipoInmueble());
 	}
 	
 	public boolean esValidoTipoDeInmueble(String tipoDeInmueble) {

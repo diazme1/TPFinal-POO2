@@ -37,7 +37,7 @@ class ReservaTest {
 		this.valoracionMock = mock(Valoracion.class);
 		this.imailMock = mock(MailSender.class);
 		
-		when(inmueble1.getMontoTotal(checkIn,checkOut)).thenReturn(400);
+		when(inmueble1.getMontoTotalPara(checkIn,checkOut)).thenReturn(400.00);
 		when(inmueble1.getDueño()).thenReturn(propMock);
 		when(inqMock.getEmail()).thenReturn("email");
 		when(propMock.getEmail()).thenReturn("email");
@@ -69,7 +69,7 @@ class ReservaTest {
 	@Test
 	void seChequeaLosCostos() {
 		assertEquals(400, reserva.getMontoTotal());
-		verify(inmueble1,times(1)).getMontoTotal(checkIn,checkOut);
+		verify(inmueble1,times(1)).getMontoTotalPara(checkIn,checkOut);
 	}
 	
 	@Test

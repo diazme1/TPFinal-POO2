@@ -17,9 +17,7 @@ import org.junit.jupiter.api.Test;
 import tpFinal_POO2.Inmueble.Inmueble;
 import tpFinal_POO2.Reserva.Reserva;
 import tpFinal_POO2.SitioWeb.FiltroCompuesto;
-import tpFinal_POO2.SitioWeb.Servicio;
 import tpFinal_POO2.SitioWeb.SitioWeb;
-import tpFinal_POO2.SitioWeb.TipoDeInmueble;
 import tpFinal_POO2.Usuario.Usuario;
 
 class SitioWebTest {
@@ -86,12 +84,12 @@ class SitioWebTest {
 	void seChequeaLaValidezDeUnInmueble() {
 		
 		this.serviciosMock.add("WIFI");
-		when(inmuebleMock.getTipoDeInmueble()).thenReturn("Casa");
+		when(inmuebleMock.getTipoInmueble()).thenReturn("Casa");
 		when(inmuebleMock.getServicios()).thenReturn(serviciosMock);
 		
 		assertTrue(site.esValidoInmueble(inmuebleMock));
 		verify(inmuebleMock,times(1)).getServicios();
-		verify(inmuebleMock,times(1)).getTipoDeInmueble();
+		verify(inmuebleMock,times(1)).getTipoInmueble();
 		
 		// LE AGREGO UN NUEVO SERVICIO PARA QUE NO SEA VALIDO Y ROMPA POR SERVICIO
 		this.serviciosMock.add("GAS");

@@ -2,17 +2,18 @@ package tpFinal_POO2.Observer;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Set;
 
 import tpFinal_POO2.Inmueble.Inmueble;
 
 public class Observer {
 	private static Observer instance;
 	//la instancia
-	private HashMap<Inmueble, HashSet<ListenerReserva>> mapReserva = new HashMap<Inmueble, HashSet<ListenerReserva>>(); 
+	private HashMap<Inmueble, Set<ListenerReserva>> mapReserva = new HashMap<Inmueble, Set<ListenerReserva>>(); 
 	//Map de subscriptores a Reservas
-	private HashMap<Inmueble, HashSet<ListenerBajaPrecio>> mapBajaPrecio= new HashMap<Inmueble, HashSet<ListenerBajaPrecio>>(); 
+	private HashMap<Inmueble, Set<ListenerBajaPrecio>> mapBajaPrecio= new HashMap<Inmueble, Set<ListenerBajaPrecio>>(); 
 	//Map de subscriptores a BajaPrecio
-	private HashMap<Inmueble, HashSet<ListenerCancelacion>> mapCancelacion= new HashMap<Inmueble, HashSet<ListenerCancelacion>>(); 
+	private HashMap<Inmueble, Set<ListenerCancelacion>> mapCancelacion= new HashMap<Inmueble, Set<ListenerCancelacion>>(); 
 	//Map de subscriptores a Cancelacion
 	
 	private Observer(){}
@@ -29,7 +30,7 @@ public class Observer {
 		if(mapBajaPrecio.containsKey(observable)){
 			mapBajaPrecio.get(observable).add(listener);
 		}else {
-			HashSet<ListenerBajaPrecio> nuevoSet = new HashSet<ListenerBajaPrecio>();
+			Set<ListenerBajaPrecio> nuevoSet = new HashSet<ListenerBajaPrecio>();
 			nuevoSet.add(listener);
 			mapBajaPrecio.put(observable,nuevoSet);
 		}
@@ -46,7 +47,7 @@ public class Observer {
 		if(mapCancelacion.containsKey(observable)){
 			mapCancelacion.get(observable).add(listener);
 		}else {
-			HashSet<ListenerCancelacion> nuevoSet = new HashSet<ListenerCancelacion>();
+			Set<ListenerCancelacion> nuevoSet = new HashSet<ListenerCancelacion>();
 			nuevoSet.add(listener);
 			mapCancelacion.put(observable,nuevoSet);
 		}
@@ -78,17 +79,27 @@ public class Observer {
 	
 	public void notifyReserva(Inmueble observable) {
 		//notifica a cada uno de los subscriptores
-		mapReserva.get(observable).forEach(sub -> sub.notifyReserva(observable));
+		if (mapReserva.containsKey(observable)) {
+			mapReserva.putIfAbsent(observable, new HashSet<ListenerReserva>());
+			mapReserva.get(observable).forEach(sub -> sub.notifyReserva(observable));
+		}
 	};
 	
 	public void notifyCancelacion(Inmueble observable) {
 		//notifica a cada uno de los subscriptores
-		mapCancelacion.get(observable).forEach(sub -> sub.popUp(observable));
+		if (mapCancelacion.containsKey(observable)) {
+			mapCancelacion.putIfAbsent(observable, new HashSet<ListenerCancelacion>());
+			mapCancelacion.get(observable).forEach(sub -> sub.popUp(observable));
+		}
+
 	};
 	
 	public void notifyBajaPrecio(Inmueble observable) {
 		//notifica a cada uno de los subscriptores
-		mapBajaPrecio.get(observable).forEach(sub -> sub.publish(observable));
+		if (mapBajaPrecio.containsKey(observable)) {
+			mapBajaPrecio.putIfAbsent(observable, new HashSet<ListenerBajaPrecio>());
+			mapBajaPrecio.get(observable).forEach(sub -> sub.publish(observable));
+		}
 	};
 	
 	

@@ -3,7 +3,9 @@ package tpFinal_POO2.Reserva;
 import java.time.LocalDate;
 
 import tpFinal_POO2.Inmueble.Inmueble;
-import tpFinal_POO2.Usuario.Usuario;
+import tpFinal_POO2.Usuario.Inquilino;
+import tpFinal_POO2.Usuario.Propietario;
+import tpFinal_POO2.Observer.Observer;
 import tpFinal_POO2.Valoracion.Valoracion;
 
 public class Reserva{
@@ -12,18 +14,16 @@ public class Reserva{
 	FormaDePago formaDePago;
 	private LocalDate checkIn;
 	private LocalDate checkOut;
-	private Usuario inquilino;
+	private Inquilino inquilino;
 	private EstadoReserva estado;
-	private ObserverManager observer;
 	private MailSender mailSender;
 	
-	public Reserva(Inmueble inmueble, FormaDePago formaDePago, LocalDate checkIn, LocalDate checkOut, Usuario inquilino) {
+	public Reserva(Inmueble inmueble, FormaDePago formaDePago, LocalDate checkIn, LocalDate checkOut, Inquilino inquilino) {
 		this.inmueble = inmueble;
 		this.formaDePago = formaDePago;
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
 		this.inquilino=inquilino;
-		this.observer=new ObserverManager();
 		this.estado= new EstadoSolicitada();
 	}
 	
@@ -57,23 +57,23 @@ public class Reserva{
 		}
 	}
 	
-	public Usuario getInfoPosibleInquilino() {
+	public Inquilino getInfoPosibleInquilino() {
 		return this.inquilino;
 	}
 	
 	public double getMontoTotal() {
-		return this.inmueble.getMontoTotal(checkIn,checkOut);
+		return this.inmueble.getMontoTotalPara(checkIn,checkOut);
 	}
 	
 	public void cancelarReserva(LocalDate diaHecho) {
 		this.estado.cancelarReserva(this,diaHecho);
 	}
 	
-	public Usuario getPropietario() {
+	public Propietario getPropietario() {
 		return this.inmueble.getDueño();
 	}
 	
-	public Usuario getInquilino() {
+	public Inquilino getInquilino() {
 		return this.inquilino;
 	}
 	
@@ -120,7 +120,6 @@ public class Reserva{
 
 	public void enviarMailCancelacion() {
 		mailSender.sendEmail(this.getPropietario().getEmail(), "Reserva Cancelada!", "Se cancelo la reserva ;(");
-		this.observer.notifyCancelacion(this.inmueble);
 	}
 
 }

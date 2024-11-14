@@ -4,14 +4,15 @@ package tpFinal_POO2.Usuario;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.OptionalDouble;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import tpFinal_POO2.Inmueble.Inmueble;
 import tpFinal_POO2.Valoracion.Valoracion;
 import tpFinal_POO2.SitioWeb.SitioWeb;
+import tpFinal_POO2.Reserva.Reserva;
 
 public class Usuario implements Inquilino,Propietario{
 	private String nombre;
@@ -99,7 +100,7 @@ public class Usuario implements Inquilino,Propietario{
 	
 	public List<Reserva> reservasFuturas(LocalDate hoy){
 		//se asume que la fecha en el parametro es la fecha actual otorgada por la interfaz web
-		return this.reservas.stream().filter(reserva -> reserva.fechaCheckIn().after(hoy)).toList();
+		return this.reservas.stream().filter(reserva -> reserva.getCheckIn().isAfter(hoy)).toList();
 	}
 	public int getAntiguedadUsuario(LocalDate hoy) {
 		//asumiendo que la fecha en el parametro es la fecha actual otorgada por la interdaz web
@@ -127,7 +128,7 @@ public class Usuario implements Inquilino,Propietario{
 
 	@Override
 	public Set<String> ciudadesReservadas() {
-		return this.reservas.stream().map(res->res.getCiudad()).toSet();
+		return this.reservas.stream().map(res->res.getCiudad()).collect(Collectors.toSet());
 	}
 
 	@Override
@@ -136,7 +137,7 @@ public class Usuario implements Inquilino,Propietario{
 	}
 
 	@Override
-	public void añadirReserva(Reserva reserva) {
+	public void agregarReserva(Reserva reserva) {
 		this.reservas.add(reserva);		
 	}
 
@@ -160,6 +161,12 @@ public class Usuario implements Inquilino,Propietario{
 
 	@Override
 	public boolean validarCategoriaInmueble(String categoria) {
-		return this.sitio.esValidaCategoriaInmueble(categoria);	}
+		return this.sitio.esValidaCategoriaInmueble(categoria);	
+	}
+	
+	@Override
+	public int cantReservasFinalizadasInquilino() {
+		return this.getReservas().stream().filter(r -> r.estaFinalizada()).toList().size();
+	}
 	
 }

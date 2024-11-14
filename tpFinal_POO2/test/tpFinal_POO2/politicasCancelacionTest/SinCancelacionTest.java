@@ -8,8 +8,8 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import tpFinal_POO2.Externos.Inquilino;
-import tpFinal_POO2.Externos.Reserva;
+import tpFinal_POO2.Usuario.Inquilino;
+import tpFinal_POO2.Reserva.Reserva;
 import tpFinal_POO2.PoliticasCancelacion.SinCancelacion;
 
 class SinCancelacionTest {
@@ -33,7 +33,7 @@ class SinCancelacionTest {
 		this.sinCancelacion.cancelarReserva(reservaMock, LocalDate.of(2024, 1, 15));
 		
 		//Más de 10 días antes es gratuito, no debería abonar:
-		verify(inquilinoMock, never()).abonar(0);
+		verify(inquilinoMock, never()).abonarMonto(0.00);
 		
 		//Agregado de assert luego de verify
 		assertTrue(true, "No hay multa por cancelación.");

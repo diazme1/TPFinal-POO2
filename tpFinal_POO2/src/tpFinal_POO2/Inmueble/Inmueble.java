@@ -86,7 +86,7 @@ public class Inmueble {
 	};
 	
 	public List<Reserva> getReservasAceptadas(){
-		return this.reservas.stream().filter(r -> r.estaAceptada()).toList();
+		return this.reservas.stream().filter(r -> r.estaAprobada()).toList();
 	};
 	
 	public Set<Reserva> getReservasCondicionales() {
@@ -248,6 +248,7 @@ public class Inmueble {
 			if (r.haySolapamiento(checkInCancelado, checkOutCancelado)) {
 				this.agregarReserva(r);
 				this.eliminarReservaDeCola(r);
+				this.observer.notifyCancelacion(this);
 				break;
 			}
 		}
